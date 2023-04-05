@@ -155,14 +155,6 @@ presenceChannel.listen((data) {
 
 ```
 
-<br><br>
-
-## <b>Note:</b> This Package is the improved version of the original package "laravel_echo", with some modifications and features.
-
-<br><br><br>
-
-<center>
+## Note: This Package is the improved version of the original package "laravel_echo", with some modifications and features
 
 # Powered By Abdo-Pr
-
-</center>
