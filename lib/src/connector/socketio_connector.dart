@@ -1,0 +1,129 @@
+import 'package:laravel_echo_null/src/channel/channel.dart';
+import 'package:socket_io_client/socket_io_client.dart';
+
+import '../channel/socketio_channel.dart';
+import '../channel/socketio_presence_channel.dart';
+import '../channel/socketio_private_channel.dart';
+import 'connector.dart';
+
+///
+/// This class creates a connnector to a Socket.io server.
+///
+class SocketIoConnector extends Connector<Socket> {
+  /// The Socket.io connection instance.
+  // Socket get socket => options.client;
+  final Socket socket;
+
+  @override
+  Socket get client => socket;
+
+  /// All of the subscribed channel names.
+  Map<String, SocketIoChannel> channels = {};
+
+  SocketIoConnector(
+    this.socket, {
+    Map? auth,
+    String? authEndpoint,
+    String? host,
+    String? key,
+    String? namespace,
+    bool autoConnect = false,
+    Map moreOptions = const {},
+  }) : super(ConnectorOptions(
+          client: socket,
+          auth: auth,
+          authEndpoint: authEndpoint,
+          host: host,
+          key: key,
+          namespace: namespace,
+          moreOptions: moreOptions,
+        ));
+
+  /// Create a fresh Socket.io connection.
+  @override
+  void connect() {
+    socket.connect();
+
+    socket.on('reconnect', (_) {
+      for (var channel in channels.values) {
+        channel.subscribe();
+      }
+    });
+  }
+
+  /// Listen for an event on a channel instance.
+  @override
+  SocketIoChannel listen(String name, String event, Function callback) {
+    return channel(name).listen(event, callback);
+  }
+
+  /// Get a channel instance by name.
+  @override
+  SocketIoChannel channel(String name) {
+    if (channels[name] == null) {
+      channels[name] = SocketIoChannel(socket, name, options);
+    }
+
+    return channels[name] as SocketIoChannel;
+  }
+
+  /// Get a private channel instance by name.
+  @override
+  SocketIoPrivateChannel privateChannel(String name) {
+    if (channels['private-$name'] == null) {
+      channels['private-$name'] = SocketIoPrivateChannel(
+        socket,
+        'private-$name',
+        options,
+      );
+    }
+
+    return channels['private-$name'] as SocketIoPrivateChannel;
+  }
+
+  /// Get a presence channel instance by name.
+  @override
+  SocketIoPresenceChannel presenceChannel(String name) {
+    if (channels['presence-$name'] == null) {
+      channels['presence-$name'] = SocketIoPresenceChannel(
+        socket,
+        'presence-$name',
+        options,
+      );
+    }
+
+    return channels['presence-$name'] as SocketIoPresenceChannel;
+  }
+
+  /// Leave the given channel, as well as its private and presence variants.
+  @override
+  void leave(String name) {
+    List<String> channels = [name, 'private-$name', 'presence-$name'];
+
+    for (var name in channels) {
+      leaveChannel(name);
+    }
+  }
+
+  /// Leave the given channel.
+  @override
+  void leaveChannel(String name) {
+    if (channels[name] != null) {
+      channels[name]!.unsubscribe();
+      channels.remove(name);
+    }
+  }
+
+  /// Get the socket ID for the connection.
+  @override
+  String? get socketId => socket.id;
+
+  /// Disconnect Socketio connection.
+  @override
+  void disconnect() {
+    socket.disconnect();
+  }
+
+  @override
+  Channel? encryptedPrivateChannel(String channel) => null;
+}
