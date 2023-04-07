@@ -3,7 +3,7 @@ import 'package:socket_io_client/socket_io_client.dart';
 
 const String token = 'API_TOKEN';
 
-Echo<Socket> initSocketIOClient() => Echo.socket(
+Echo<Socket, SocketIoChannel> initSocketIOClient() => Echo.socket(
       'http://127.0.0.1:6001',
       autoConnect: false,
       auth: {

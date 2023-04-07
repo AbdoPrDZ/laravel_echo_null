@@ -9,16 +9,13 @@ import 'connector.dart';
 ///
 /// This class creates a null connector.
 ///
-class PusherConnector extends Connector<PusherClient> {
+class PusherConnector extends Connector<PusherClient, PusherChannel> {
   /// The Pusher connection instance.
   // PusherClient get pusher => options.client;
   final PusherClient pusher;
 
   @override
   PusherClient get client => pusher;
-
-  /// All of the subscribed channel names.
-  Map<String, PusherChannel> channels = {};
 
   PusherConnector(
     this.pusher, {
@@ -40,12 +37,6 @@ class PusherConnector extends Connector<PusherClient> {
           moreOptions: moreOptions,
         ));
 
-  /// Create a fresh Pusher connection.
-  @override
-  void connect() {
-    pusher.connect();
-  }
-
   /// Listen for an event on a channel instance.
   @override
   PusherChannel listen(String name, String event, Function callback) =>
@@ -57,7 +48,6 @@ class PusherConnector extends Connector<PusherClient> {
     if (channels[name] == null) {
       channels[name] = PusherChannel(pusher, name, options);
     }
-
     return channels[name] as PusherChannel;
   }
 
@@ -121,6 +111,12 @@ class PusherConnector extends Connector<PusherClient> {
   /// Get the socket ID for the connection.
   @override
   String? get socketId => pusher.getSocketId();
+
+  /// Create a fresh Pusher connection.
+  @override
+  void connect() {
+    pusher.connect();
+  }
 
   /// Disconnect Pusher connection.
   @override

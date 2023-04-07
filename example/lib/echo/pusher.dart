@@ -9,7 +9,7 @@ const String hostAuthEndPoint = "$hostEndPoint/broadcasting/auth";
 const String token = "API_TOKEN";
 const int port = 6001;
 
-Echo<PusherClient> initPusherClient() {
+Echo<PusherClient, PusherChannel> initPusherClient() {
   PusherOptions options = PusherOptions(
     host: hostEndPoint,
     wsPort: port,
@@ -24,7 +24,7 @@ Echo<PusherClient> initPusherClient() {
     ),
   );
 
-  Echo<PusherClient> pusherEcho = Echo.pusher(
+  Echo<PusherClient, PusherChannel> pusherEcho = Echo.pusher(
     key,
     options,
     autoConnect: false,

@@ -3,10 +3,10 @@ import 'package:pusher_client/pusher_client.dart' as PUSHER;
 import '../channel/channel.dart';
 import '../channel/presence_channel.dart';
 
-abstract class Connector<T> {
+abstract class Connector<ClientType, ChannelType> {
   /// Connector options.
   // ConnectorOptions options;
-  ConnectorOptions<T> options;
+  ConnectorOptions<ClientType> options;
 
   /// Create a new class instance.
   Connector(this.options) {
@@ -14,10 +14,10 @@ abstract class Connector<T> {
   }
 
   // getting client
-  T get client;
+  ClientType get client;
 
-  /// Create a fresh connection.
-  void connect();
+  // All of the subscribed channel names.
+  Map<String, ChannelType> channels = {};
 
   /// Get a channel instance by name.
   Channel channel(String channel);
@@ -27,7 +27,7 @@ abstract class Connector<T> {
 
   Channel listen(String channel, String event, Function callback);
 
-  Channel? encryptedPrivateChannel(String channel);
+  Channel? encryptedPrivateChannel(String channel) => null;
 
   /// Get a presence channel instance by name.
   PresenceChannel presenceChannel(String channel);
@@ -40,6 +40,9 @@ abstract class Connector<T> {
 
   /// Get the socket_id of the connection.
   String? get socketId;
+
+  /// Create a fresh connection.
+  void connect();
 
   /// Disconnect from the Echo server.
   void disconnect();

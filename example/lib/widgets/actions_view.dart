@@ -1,3 +1,5 @@
+import 'dart:developer' as dev;
+
 import 'package:flutter/material.dart';
 import 'package:laravel_echo_null/laravel_echo_null.dart';
 import 'package:pusher_client/pusher_client.dart';
@@ -48,7 +50,9 @@ class _ActionsView extends State<ActionsView> {
 
     try {
       echo.disconnect();
-    } catch (e) {}
+    } catch (e) {
+      dev.log('$e');
+    }
     initEcho();
   }
 
@@ -97,11 +101,11 @@ class _ActionsView extends State<ActionsView> {
       channel = echo.private(name);
     } else if (type == ChannelType.presence) {
       channel = echo.join(name).here((users) {
-        print(users);
+        dev.log(users);
       }).joining((user) {
-        print(user);
+        dev.log(user);
       }).leaving((user) {
-        print(user);
+        dev.log(user);
       });
     }
 
@@ -126,7 +130,7 @@ class _ActionsView extends State<ActionsView> {
         return;
       }
 
-      print('event: $e');
+      dev.log('event: $e');
       log('event: $e');
     });
   }
@@ -173,7 +177,7 @@ class _ActionsView extends State<ActionsView> {
               width: 20,
               child: Center(
                 child: Text(
-                  listeningChannels.length.toString(),
+                  '${listeningChannels.length}',
                 ),
               ),
             ),

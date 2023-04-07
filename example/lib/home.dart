@@ -1,3 +1,5 @@
+import 'dart:developer' as dev;
+
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'app_state.dart';
@@ -20,7 +22,7 @@ class _HomeState extends State<Home> {
     String date = now.hour.toString().padLeft(2, '0');
     date += ":${now.minute.toString().padLeft(2, '0')}";
     date += ":${now.second.toString().padLeft(2, '0')}";
-    print('$date: $event');
+    dev.log('$date: $event');
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       setState(() => logs.insert(0, LogString(date: date, text: event)));

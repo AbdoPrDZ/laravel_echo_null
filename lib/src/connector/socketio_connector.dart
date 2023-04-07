@@ -7,18 +7,15 @@ import '../channel/socketio_private_channel.dart';
 import 'connector.dart';
 
 ///
-/// This class creates a connnector to a Socket.io server.
+/// This class creates a connector to a Socket.io server.
 ///
-class SocketIoConnector extends Connector<Socket> {
+class SocketIoConnector extends Connector<Socket, SocketIoChannel> {
   /// The Socket.io connection instance.
   // Socket get socket => options.client;
   final Socket socket;
 
   @override
   Socket get client => socket;
-
-  /// All of the subscribed channel names.
-  Map<String, SocketIoChannel> channels = {};
 
   SocketIoConnector(
     this.socket, {
@@ -38,18 +35,6 @@ class SocketIoConnector extends Connector<Socket> {
           namespace: namespace,
           moreOptions: moreOptions,
         ));
-
-  /// Create a fresh Socket.io connection.
-  @override
-  void connect() {
-    socket.connect();
-
-    socket.on('reconnect', (_) {
-      for (var channel in channels.values) {
-        channel.subscribe();
-      }
-    });
-  }
 
   /// Listen for an event on a channel instance.
   @override
@@ -118,12 +103,21 @@ class SocketIoConnector extends Connector<Socket> {
   @override
   String? get socketId => socket.id;
 
+  /// Create a fresh Socket.io connection.
+  @override
+  void connect() {
+    socket.connect();
+
+    socket.on('reconnect', (_) {
+      for (var channel in channels.values) {
+        channel.subscribe();
+      }
+    });
+  }
+
   /// Disconnect Socketio connection.
   @override
   void disconnect() {
     socket.disconnect();
   }
-
-  @override
-  Channel? encryptedPrivateChannel(String channel) => null;
 }
