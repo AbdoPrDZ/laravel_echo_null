@@ -42,7 +42,7 @@ Echo<PusherClient, PusherChannel> initPusherClient() {
       'maxReconnectGapInSeconds': options.maxReconnectGapInSeconds,
     },
   );
-  pusherEcho.connector.client.onConnectionError(
+  pusherEcho.connector.onConnectError(
     (error) => print('[Pusher Connection Error]: ${error?.message}'),
   );
   return pusherEcho;
