@@ -1,4 +1,3 @@
-import 'package:laravel_echo_null/src/channel/channel.dart';
 import 'package:socket_io_client/socket_io_client.dart';
 
 import '../channel/socketio_channel.dart';
@@ -117,7 +116,21 @@ class SocketIoConnector extends Connector<Socket, SocketIoChannel> {
 
   /// Disconnect Socketio connection.
   @override
-  void disconnect() {
-    socket.disconnect();
-  }
+  void disconnect() => socket.disconnect();
+
+  @override
+  void onConnect(Function(dynamic data) handler) =>
+      socket.onConnect((data) => handler(data));
+
+  @override
+  void onConnectError(Function(dynamic data) handler) =>
+      socket.onConnectError((data) => handler(data));
+
+  @override
+  void onDisconnect(Function(dynamic data) handler) =>
+      socket.onDisconnect((data) => handler(data));
+
+  @override
+  void onError(Function(dynamic data) handler) =>
+      socket.onError((data) => handler(data));
 }

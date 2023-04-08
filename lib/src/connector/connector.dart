@@ -46,6 +46,14 @@ abstract class Connector<ClientType, ChannelType> {
 
   /// Disconnect from the Echo server.
   void disconnect();
+
+  void onConnect(Function(dynamic data) handler) {}
+
+  void onConnectError(Function(dynamic data) handler) {}
+
+  void onDisconnect(Function(dynamic data) handler) {}
+
+  void onError(Function(dynamic data) handler) {}
 }
 
 class ConnectorOptions<T> {

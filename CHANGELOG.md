@@ -5,3 +5,7 @@
 ## 0.0.2
 
 * Generate a channels map in connector class
+
+## 0.0.3
+
+* Add connector connection events

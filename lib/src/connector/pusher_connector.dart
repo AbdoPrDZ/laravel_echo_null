@@ -121,4 +121,8 @@ class PusherConnector extends Connector<PusherClient, PusherChannel> {
   /// Disconnect Pusher connection.
   @override
   void disconnect() => pusher.disconnect();
+
+  @override
+  void onConnectError(Function(dynamic data) handler) =>
+      pusher.onConnectionError((data) => handler(data));
 }
