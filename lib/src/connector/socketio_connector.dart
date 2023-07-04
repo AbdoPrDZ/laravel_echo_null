@@ -37,9 +37,7 @@ class SocketIoConnector extends Connector<Socket, SocketIoChannel> {
 
   /// Listen for an event on a channel instance.
   @override
-  SocketIoChannel listen(String name, String event, Function callback) {
-    return channel(name).listen(event, callback);
-  }
+  SocketIoChannel listen(String name, String event, Function callback) => channel(name).listen(event, callback);
 
   /// Get a channel instance by name.
   @override

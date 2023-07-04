@@ -1,4 +1,4 @@
-import '../util/event_formatter.dart';
+import 'event_formatter.dart';
 import 'channel.dart';
 
 ///
@@ -12,20 +12,20 @@ class PusherChannel extends Channel {
   String name;
 
   /// The event formatter.
-  late EventFormatter eventFormatter;
+  // late EventFormatter eventFormatter;
 
-  /// The subcription of the channel.
-  dynamic subcription;
+  /// The subscription of the channel.
+  dynamic subscription;
 
   /// Create a new class instance.
   PusherChannel(this.pusher, this.name, super.options) {
-    eventFormatter = EventFormatter(options.namespace);
+    // eventFormatter = EventFormatter(options.namespace);
     subscribe();
   }
 
   /// Subscribe to a Pusher channel.
   void subscribe() {
-    subcription = pusher.subscribe(name);
+    subscription = pusher.subscribe(name);
   }
 
   /// Unsubscribe from a channel.
@@ -37,13 +37,14 @@ class PusherChannel extends Channel {
   /// Listen for an event on the channel instance.
   @override
   PusherChannel listen(String event, Function callback) {
-    return on(eventFormatter.format(event), callback);
+    // return on(eventFormatter.format(event), callback);
+    return on(EventFormatter.format(event, options.namespace), callback);
     // return this;
   }
 
   /// Listen for all events on the channel instance.
   PusherChannel listenToAll(Function callback) {
-    subcription.bind_global((String event, dynamic data) {
+    subscription.bind_global((String event, dynamic data) {
       if (event.startsWith('pusher:')) return;
 
       String namespace =
@@ -61,9 +62,12 @@ class PusherChannel extends Channel {
   @override
   PusherChannel stopListening(String event, [Function? callback]) {
     if (callback != null) {
-      subcription.unbind(eventFormatter.format(event), callback);
+      // subscription.unbind(eventFormatter.format(event), callback);
+      subscription.unbind(
+          EventFormatter.format(event, options.namespace), callback);
     } else {
-      subcription.unbind(eventFormatter.format(event));
+      // subscription.unbind(eventFormatter.format(event));
+      subscription.unbind(EventFormatter.format(event, options.namespace));
     }
     return this;
   }
@@ -71,33 +75,29 @@ class PusherChannel extends Channel {
   /// Stop listening for all events on the channel instance.
   PusherChannel stopListeningAll([Function? callback]) {
     if (callback != null) {
-      subcription.unbind_global(callback);
+      subscription.unbind_global(callback);
     } else {
-      subcription.unbind_global();
+      subscription.unbind_global();
     }
     return this;
   }
 
   /// Register a callback to be called anytime a subscription succeeds.
   @override
-  PusherChannel subscribed(Function callback) {
-    return on('pusher:subscription_succeeded', () => callback());
-    // return this;
-  }
+  PusherChannel subscribed(Function callback) =>
+      on('pusher:subscription_succeeded', () => callback());
 
   ///  Register a callback to be called anytime a subscription error occurs.
   @override
-  PusherChannel error(Function callback) {
-    return on('pusher:subscription_error', (status) => callback(status));
-    // return this;
-  }
+  PusherChannel error(Function callback) =>
+      on('pusher:subscription_error', (status) => callback(status));
 
   /// Bind a channel to an event.
   PusherChannel on(String event, Function callback) {
-    if (subcription is Future) {
-      subcription.then((channel) => channel.bind(event, callback));
+    if (subscription is Future) {
+      subscription.then((channel) => channel.bind(event, callback));
     } else {
-      subcription.bind(event, callback);
+      subscription.bind(event, callback);
     }
     return this;
   }

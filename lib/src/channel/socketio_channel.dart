@@ -1,4 +1,4 @@
-import '../util/event_formatter.dart';
+import 'event_formatter.dart';
 import 'channel.dart';
 
 ///
@@ -12,7 +12,7 @@ class SocketIoChannel extends Channel {
   String name;
 
   /// The event formatter.
-  late EventFormatter eventFormatter;
+  // late EventFormatter eventFormatter;
 
   /// The event callbacks applied to the socket.
   Map<String, dynamic> events = {};
@@ -22,7 +22,7 @@ class SocketIoChannel extends Channel {
 
   /// Create a new class instance.
   SocketIoChannel(this.socket, this.name, super.options) {
-    eventFormatter = EventFormatter(options.namespace);
+    // eventFormatter = EventFormatter(options.namespace);
     subscribe();
   }
 
@@ -34,7 +34,7 @@ class SocketIoChannel extends Channel {
     });
   }
 
-  /// Unsubscribe from channel and ubind event callbacks.
+  /// Unsubscribe from channel and unbind event callbacks.
   @override
   void unsubscribe() {
     unbind();
@@ -47,7 +47,8 @@ class SocketIoChannel extends Channel {
   /// Listen for an event on the channel instance.
   @override
   SocketIoChannel listen(String event, Function callback) {
-    on(eventFormatter.format(event), callback);
+    // on(eventFormatter.format(event), callback);
+    on(EventFormatter.format(event, options.namespace), callback);
 
     return this;
   }
@@ -55,7 +56,8 @@ class SocketIoChannel extends Channel {
   /// Stop listening for an event on the channel instance.
   @override
   SocketIoChannel stopListening(String event, [Function? callback]) {
-    _unbindEvent(eventFormatter.format(event), callback);
+    // _unbindEvent(eventFormatter.format(event), callback);
+    _unbindEvent(EventFormatter.format(event, options.namespace), callback);
 
     return this;
   }

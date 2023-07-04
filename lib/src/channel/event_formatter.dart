@@ -3,17 +3,17 @@
 ///
 class EventFormatter {
   /// Event namespace.
-  String? namespace;
+  // String? namespace;
 
   /// Create a new class instance.
-  EventFormatter(this.namespace);
+  // EventFormatter(this.namespace);
 
   /// Format the given event name.
-  String format(String event) {
+  static String format(String event, String? namespace) {
     if (event.substring(0, 1) == '.' || event.substring(0, 1) == '\\') {
       return event.substring(1);
     } else if (namespace != null) {
-      event = '${namespace!}.$event';
+      event = '$namespace.$event';
     }
     return event.replaceAll(RegExp(r'\.'), '\\');
   }
