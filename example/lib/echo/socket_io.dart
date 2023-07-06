@@ -4,12 +4,13 @@ import 'package:socket_io_client/socket_io_client.dart';
 const String token = 'API_TOKEN';
 
 Echo<Socket, SocketIoChannel> initSocketIOClient() => Echo.socket(
-      'http://127.0.0.1:6001',
+      'http://localhost:3000',
       autoConnect: false,
       auth: {
         'headers': {'Authorization': 'Bearer $token'}
       },
       moreOptions: {
-        'transports': ['websocket'],
+        // 'transports': ['websocket', 'polling', 'flashsocket']
+        'transports': ['websocket']
       },
     );

@@ -1,9 +1,9 @@
 import 'package:laravel_echo_null/laravel_echo_null.dart';
 import 'package:pusher_client/pusher_client.dart';
 
-const String appId = "1321495";
-const String key = "037c47e0cbdc81fb7144";
-const String cluster = "mt1";
+const String appId = "PUSHER_APP_ID";
+const String key = "PUSHER_KEY";
+const String cluster = "PUSHER_CLUSTER";
 const String hostEndPoint = "http://localhost";
 const String hostAuthEndPoint = "$hostEndPoint/broadcasting/auth";
 const String token = "API_TOKEN";

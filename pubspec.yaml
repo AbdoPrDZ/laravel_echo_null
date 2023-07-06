@@ -1,6 +1,6 @@
 name: laravel_echo_null
 description: This Package is the improved version of the original package "laravel_echo", with some modifications and features.
-version: 0.0.3
+version: 0.0.4
 homepage: https://github.com/AIabdoPr/laravel_echo_null.git
 
 environment:
@@ -10,7 +10,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  pusher_client: ^2.0.0
+  pusher_client:
+    path: pusher_client_fixed
   socket_io_client: 1.0.2
 
 dev_dependencies:

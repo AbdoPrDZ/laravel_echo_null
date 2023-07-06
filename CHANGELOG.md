@@ -9,3 +9,7 @@
 ## 0.0.3
 
 * Add connector connection events
+
+## 0.0.4
+
+* fix pusher_client kotlin sdk version.

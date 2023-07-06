@@ -79,7 +79,9 @@ class Echo<ClientType, ChannelType> {
     Map moreOptions = const {},
   }) =>
       Echo<IO.Socket, SocketIoChannel>(SocketIoConnector(
-        IO.io(host, {'autoConnect': autoConnect}),
+        IO.io(host, <String, dynamic>{
+          'autoConnect': autoConnect,
+        }),
         auth: auth,
         authEndpoint: authEndpoint,
         host: host,

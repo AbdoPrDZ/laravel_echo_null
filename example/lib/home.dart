@@ -1,20 +1,20 @@
 import 'dart:developer' as dev;
 
-import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'app_state.dart';
-import 'widgets/logs_view.dart';
-import 'widgets/actions_view.dart';
+import 'package:flutter/material.dart';
+
+import 'views/actions.view.dart';
+import 'views/log.view.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
 
   @override
-  createState() => _HomeState();
+  State<Home> createState() => _HomeState();
 }
 
 class _HomeState extends State<Home> {
-  String broadcaster = 'pusher';
+  String broadcaster = 'socket.io';
   List<LogString> logs = [];
 
   log(String event) {
@@ -24,9 +24,7 @@ class _HomeState extends State<Home> {
     date += ":${now.second.toString().padLeft(2, '0')}";
     dev.log('$date: $event');
 
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      setState(() => logs.insert(0, LogString(date: date, text: event)));
-    });
+    setState(() => logs.insert(0, LogString(date: date, text: event)));
   }
 
   @override
@@ -49,7 +47,9 @@ class _HomeState extends State<Home> {
             ),
           },
           onValueChanged: (String value) {
-            setState(() => broadcaster = value);
+            setState(() {
+              broadcaster = value;
+            });
             log('switched to $value');
           },
           groupValue: broadcaster,
@@ -77,26 +77,20 @@ class _HomeState extends State<Home> {
           ),
         ),
       ),
-      body: AppState(
-        logs: logs,
-        log: log,
-        child: Scaffold(
-          body: Column(
-            children: [
-              const Flexible(child: LogsView()),
-              Flexible(
-                child: Container(
-                  decoration: BoxDecoration(
-                    border: Border(
-                      top: BorderSide(color: Colors.grey[300]!),
-                    ),
-                  ),
-                  child: ActionsView(broadcaster: broadcaster),
+      body: Column(
+        children: [
+          Flexible(child: LogView(logs)),
+          Flexible(
+            child: Container(
+              decoration: BoxDecoration(
+                border: Border(
+                  top: BorderSide(color: Colors.grey[300]!),
                 ),
               ),
-            ],
+              child: ActionsView(broadcaster: broadcaster, log: log),
+            ),
           ),
-        ),
+        ],
       ),
     );
   }
