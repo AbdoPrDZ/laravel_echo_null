@@ -1,7 +1,20 @@
-
 # Getting started
 
 ## laravel_echo_null
+
+## Packages Versions:
+ - socket_io_client@1.0.2
+ - pusher_client_fixed@0.0.1 from "https://github.com/AbdoPrDZ/pusher_client_fixed.git", to do that edit your "pubspec.yaml" like that:
+    ```yaml
+    dependencies:
+
+      # ... other dependencies ...
+
+      pusher_client:
+        git:
+          url: https://github.com/AbdoPrDZ/pusher_client_fixed.git
+          ref: main
+    ```
 
 ### Importing
 
