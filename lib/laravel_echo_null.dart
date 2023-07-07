@@ -12,7 +12,7 @@ import 'src/connector/socketio_connector.dart';
 
 // Clients
 import 'package:socket_io_client/socket_io_client.dart' as IO;
-import 'package:pusher_client/pusher_client.dart' as PUSHER;
+import 'package:pusher_client_fixed/pusher_client_fixed.dart' as PUSHER;
 
 // Exports
 export 'src/connector/connector.dart';

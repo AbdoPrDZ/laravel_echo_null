@@ -1,4 +1,4 @@
-import 'package:pusher_client/pusher_client.dart' as PUSHER;
+import 'package:pusher_client_fixed/pusher_client_fixed.dart' as PUSHER;
 
 import '../channel/channel.dart';
 import '../channel/presence_channel.dart';

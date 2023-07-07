@@ -1,4 +1,4 @@
-import 'package:pusher_client/pusher_client.dart';
+import 'package:pusher_client_fixed/pusher_client_fixed.dart';
 
 import '../channel/pusher_channel.dart';
 import '../channel/pusher_encrypted_private_channel.dart';

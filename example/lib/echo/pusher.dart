@@ -1,5 +1,5 @@
 import 'package:laravel_echo_null/laravel_echo_null.dart';
-import 'package:pusher_client/pusher_client.dart';
+import 'package:pusher_client_fixed/pusher_client_fixed.dart';
 
 const String appId = "PUSHER_APP_ID";
 const String key = "PUSHER_KEY";

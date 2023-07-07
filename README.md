@@ -9,7 +9,7 @@
   | Package                    | Version   | URL Source                                                             |
   | -------------------------- | --------- | ---------------------------------------------------------------------- |
   | socket_io_client           | 2.0.2     | [pub.dev](https://pub.dev/packages/socket_io_client)                   |
-  | pusher_client_fixed        | 0.0.1     | [GitHub](https://github.com/AbdoPrDZ/pusher_client_fixed.git)          |
+  | pusher_client_fixed        | 0.0.1     | [pub.dev](https://pub.dev/packages/pusher_client_fixed)                |
   | fixed-laravel-echo-server  | 0.0.1     | [npm](https://www.npmjs.com/package/@abdopr/fixed-laravel-echo-server) |
 
   To include these packages in your project, add the following dependencies to your `pubspec.yaml` file:
@@ -17,10 +17,7 @@
   ```yaml
   dependencies:
     socket_io_client: ^2.0.2
-    pusher_client:
-      git:
-        url: https://github.com/AbdoPrDZ/pusher_client_fixed.git
-        ref: main
+    pusher_client_fixed: ^0.0.1
   ```
 
   Please note that the `laravel_echo_null` package requires the `socket_io_client` package at version 2.0.2. Additionally, to ensure compatibility with the package, use the `fixed-laravel-echo-server` version 0.0.1, which is available on npm. You can install it globally by running the following command:
@@ -75,7 +72,7 @@
   ));
 
   ///// Pusher ////
-  import 'package:pusher_client/pusher_client.dart';
+  import 'package:pusher_client_fixed/pusher_client_fixed.dart';
 
   PusherClient pusher = PusherClient(
     'PUSHER_APP_KEY',
@@ -125,7 +122,7 @@
   );
 
   ///// Pusher ////
-  import 'package:pusher_client/pusher_client.dart';
+  import 'package:pusher_client_fixed/pusher_client_fixed.dart';
   
   PusherOptions options = PusherOptions(
     host: 'http://localhost',

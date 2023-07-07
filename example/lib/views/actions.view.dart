@@ -2,7 +2,7 @@ import 'dart:developer' as dev;
 
 import 'package:flutter/material.dart';
 import 'package:laravel_echo_null/laravel_echo_null.dart';
-import 'package:pusher_client/pusher_client.dart' as PUSHER;
+import 'package:pusher_client_fixed/pusher_client_fixed.dart' as PUSHER;
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 
 import '../echo/pusher.dart';

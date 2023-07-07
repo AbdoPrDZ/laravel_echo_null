@@ -12,10 +12,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   laravel_echo_null:
     path: ../
-  pusher_client:
-    git:
-      url: https://github.com/AbdoPrDZ/pusher_client_fixed.git
-      ref: main
+  pusher_client_fixed: ^0.0.1
   socket_io_client: ^2.0.2
 
 dev_dependencies:
