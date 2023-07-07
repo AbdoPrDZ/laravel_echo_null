@@ -81,6 +81,9 @@ class Echo<ClientType, ChannelType> {
       Echo<IO.Socket, SocketIoChannel>(SocketIoConnector(
         IO.io(host, <String, dynamic>{
           'autoConnect': autoConnect,
+          'transports': moreOptions.containsKey('transports')
+              ? moreOptions['transports']
+              : []
         }),
         auth: auth,
         authEndpoint: authEndpoint,

@@ -1,26 +1,43 @@
-# Getting started
+# laravel_echo_null
 
-## laravel_echo_null
+## Getting started
 
-## Packages Versions:
- - socket_io_client@1.0.2
- - pusher_client_fixed@0.0.1 from "https://github.com/AbdoPrDZ/pusher_client_fixed.git", to do that edit your "pubspec.yaml" like that:
-    ```yaml
-    dependencies:
+### Important information before using
 
-      # ... other dependencies ...
+- The `laravel_echo_null` package relies on the following packages:
 
-      pusher_client:
-        git:
-          url: https://github.com/AbdoPrDZ/pusher_client_fixed.git
-          ref: main
-    ```
+  | Package                    | Version   | URL Source                                                             |
+  | -------------------------- | --------- | ---------------------------------------------------------------------- |
+  | socket_io_client           | 2.0.2     | [pub.dev](https://pub.dev/packages/socket_io_client)                   |
+  | pusher_client_fixed        | 0.0.1     | [GitHub](https://github.com/AbdoPrDZ/pusher_client_fixed.git)          |
+  | fixed-laravel-echo-server  | 0.0.1     | [npm](https://www.npmjs.com/package/@abdopr/fixed-laravel-echo-server) |
+
+  To include these packages in your project, add the following dependencies to your `pubspec.yaml` file:
+
+  ```yaml
+  dependencies:
+    socket_io_client: ^2.0.2
+    pusher_client:
+      git:
+        url: https://github.com/AbdoPrDZ/pusher_client_fixed.git
+        ref: main
+  ```
+
+  Please note that the `laravel_echo_null` package requires the `socket_io_client` package at version 2.0.2. Additionally, to ensure compatibility with the package, use the `fixed-laravel-echo-server` version 0.0.1, which is available on npm. You can install it globally by running the following command:
+
+  ```bash
+  npm i -g @abdopr/fixed-laravel-echo-server
+  ```
+
+  For more information, please refer to the [official documentation](https://pub.dev/packages/socket_io_client) of `fixed-laravel-echo-server`.
+
+  Make sure to add these dependencies and follow the instructions to include them properly in your project  
 
 ### Importing
 
-```dart
-import 'package:laravel_echo_null/laravel_echo_null.dart';
-```
+- ```dart
+  import 'package:laravel_echo_null/laravel_echo_null.dart';
+  ```
 
 ### Initializing
 
@@ -147,27 +164,34 @@ import 'package:laravel_echo_null/laravel_echo_null.dart';
 
 ### Channels
 
-```dart
-// public channel
-Channel publicChannel = echo.channel('my-channel');
-publicChannel.listen('MyEvent', (data) {
-  print(data);
-});
+- ```dart
+  // public channel
+  Channel publicChannel = echo.channel('my-channel');
+  publicChannel.listen('MyEvent', (data) {
+    print(data);
+  });
 
-// private channel
-Channel privateChannel = echo.private('my-channel.1')
-privateChannel.listen('MyEvent', (data) {
-  print(data);
-});
+  // private channel
+  Channel privateChannel = echo.private('my-channel.1')
+  privateChannel.listen('MyEvent', (data) {
+    print(data);
+  });
 
-// presence channel
-PresenceChannel presenceChannel = echo.join('presence-channel');
-presenceChannel.listen((data) {
-  print(data);
-});
+  // presence channel
+  PresenceChannel presenceChannel = echo.join('presence-channel');
+  presenceChannel.listen((data) {
+    print(data);
+  });
+  ```
 
-```
+----------------------------------------------------------------------------------------------------------------------------
 
-## Note: This Package is the improved version of the original package "laravel_echo", with some modifications and features
+## `Note: This Package is the improved version of the original package "laravel_echo", with some modifications and features`
 
-# Powered By Abdo-Pr
+----------------------------------------------------------------------------------------------------------------------------
+
+## Powered By Abdo-Pr
+
+- GitHub Profile: <https://github.com/AbdoPrDZ>
+- WhatsApp + Telegram (+213778185797)
+- Facebook Account: <https://www.facebook.com/profile.php?id=100008024286034>

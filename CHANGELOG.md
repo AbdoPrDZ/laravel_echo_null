@@ -12,4 +12,6 @@
 
 ## 0.0.4
 
-* fix pusher_client kotlin sdk version.
+* Fixed some issues that were occurring.
+* Fixed the pusher_client Kotlin SDK version to ensure compatibility.
+* Updated the package to work with `socket.io@4.x` on the server side and `socket.io-client@2.x` on the client side.
