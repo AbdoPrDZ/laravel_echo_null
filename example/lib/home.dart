@@ -14,7 +14,7 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  String broadcaster = 'socket.io';
+  String broadcaster = 'pusher';
   List<LogString> logs = [];
 
   log(String event) {

@@ -1,25 +1,25 @@
 import 'package:laravel_echo_null/laravel_echo_null.dart';
 import 'package:pusher_client_fixed/pusher_client_fixed.dart';
 
-const String appId = "PUSHER_APP_ID";
-const String key = "PUSHER_KEY";
-const String cluster = "PUSHER_CLUSTER";
-const String hostEndPoint = "http://localhost";
-const String hostAuthEndPoint = "$hostEndPoint/broadcasting/auth";
-const String token = "API_TOKEN";
+const String appId = "1321495";
+const String key = "037c47e0cbdc81fb7144";
+const String cluster = "mt1";
+const String hostEndPoint = "192.168.1.105";
+const String hostAuthEndPoint = "http://$hostEndPoint/broadcasting/auth";
+const String token = "34|yzWaxwGZz75Xqk4tXviP4uhAc0sVB14OLVXEmoxg";
 const int port = 6001;
 
-Echo<PusherClient, PusherChannel> initPusherClient() {
+Echo<PusherClient, PusherChannel> initPusherClient(
+    Function(String message) log) {
   PusherOptions options = PusherOptions(
     host: hostEndPoint,
     wsPort: port,
     cluster: cluster,
+    encrypted: true,
     auth: PusherAuth(
       hostAuthEndPoint,
       headers: {
         'Authorization': 'Bearer $token',
-        'Content-Type': 'application/json',
-        'Accept': 'application/json',
       },
     ),
   );
@@ -43,7 +43,7 @@ Echo<PusherClient, PusherChannel> initPusherClient() {
     },
   );
   pusherEcho.connector.onConnectError(
-    (error) => print('[Pusher Connection Error]: ${error?.message}'),
+    (error) => log('[Pusher Connection Error]: ${error?.message}'),
   );
   return pusherEcho;
 }

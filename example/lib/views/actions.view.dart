@@ -11,7 +11,7 @@ import 'leave_channel.view.dart';
 import 'listen_to_channel.view.dart';
 
 class ActionsView extends StatefulWidget {
-  final Function log;
+  final Function(String message) log;
   final String broadcaster;
 
   const ActionsView({
@@ -40,7 +40,7 @@ class _ActionsViewState extends State<ActionsView> {
 
     if (widget.broadcaster == 'pusher') {
       widget.log('initializing pusher');
-      echo = initPusherClient();
+      echo = initPusherClient(widget.log);
       widget.log('pusher initialized successfully');
 
       (echo!.connector.client as PUSHER.PusherClient)
