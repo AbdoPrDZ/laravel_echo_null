@@ -1,11 +1,7 @@
 import '../connector/connector.dart';
 
-///
-/// This class represents a basic channel.
-///
 abstract class Channel {
   /// The Echo options.
-  // Map<String, dynamic> options;
   ConnectorOptions options;
 
   Channel(this.options);

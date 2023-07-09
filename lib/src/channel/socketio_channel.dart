@@ -1,3 +1,5 @@
+import 'package:socket_io_client/socket_io_client.dart';
+
 import 'event_formatter.dart';
 import 'channel.dart';
 
@@ -6,7 +8,7 @@ import 'channel.dart';
 ///
 class SocketIoChannel extends Channel {
   /// The Socket.io client instance.
-  dynamic socket;
+  Socket socket;
 
   /// The name of the channel.
   String name;
@@ -30,7 +32,7 @@ class SocketIoChannel extends Channel {
   void subscribe() {
     socket.emit('subscribe', {
       'channel': name,
-      'auth': options.auth,
+      'auth': {'headers': options.authHeaders},
     });
   }
 
@@ -40,7 +42,7 @@ class SocketIoChannel extends Channel {
     unbind();
     socket.emit('unsubscribe', {
       'channel': name,
-      'auth': options.auth,
+      'auth': {'headers': options.authHeaders},
     });
   }
 
@@ -48,7 +50,7 @@ class SocketIoChannel extends Channel {
   @override
   SocketIoChannel listen(String event, Function callback) {
     // on(eventFormatter.format(event), callback);
-    on(EventFormatter.format(event, options.namespace), callback);
+    on(EventFormatter.format(event, options.nameSpace), callback);
 
     return this;
   }
@@ -56,8 +58,7 @@ class SocketIoChannel extends Channel {
   /// Stop listening for an event on the channel instance.
   @override
   SocketIoChannel stopListening(String event, [Function? callback]) {
-    // _unbindEvent(eventFormatter.format(event), callback);
-    _unbindEvent(EventFormatter.format(event, options.namespace), callback);
+    _unbindEvent(EventFormatter.format(event, options.nameSpace), callback);
 
     return this;
   }

@@ -19,3 +19,7 @@
 ## 0.0.4+1
 
 * Upgrade pusher_client_fixed to 0.0.2
+
+## 0.0.5
+
+* Clean up the code.

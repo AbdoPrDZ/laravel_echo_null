@@ -1,5 +1,3 @@
-import 'package:pusher_client_fixed/pusher_client_fixed.dart' as PUSHER;
-
 import '../channel/channel.dart';
 import '../channel/presence_channel.dart';
 
@@ -9,9 +7,7 @@ abstract class Connector<ClientType, ChannelType> {
   ConnectorOptions<ClientType> options;
 
   /// Create a new class instance.
-  Connector(this.options) {
-    if (options.autoConnect) connect();
-  }
+  Connector(this.options);
 
   // getting client
   ClientType get client;
@@ -57,67 +53,13 @@ abstract class Connector<ClientType, ChannelType> {
 }
 
 class ConnectorOptions<T> {
-  final Map? auth;
-  final String? authEndpoint;
-  final String? host;
-  final String? key;
-  final String? namespace;
-  final bool autoConnect;
+  final Map? authHeaders;
+  final String? nameSpace;
   final T client;
-  final Map moreOptions;
 
   const ConnectorOptions({
     required this.client,
-    this.auth,
-    this.authEndpoint,
-    this.host,
-    this.key,
-    this.namespace,
-    this.autoConnect = false,
-    this.moreOptions = const {},
+    this.authHeaders,
+    this.nameSpace,
   });
-
-  // get Options from PusherOptions
-  static ConnectorOptions<PUSHER.PusherClient> fromPusherOptions(
-    PUSHER.PusherClient client,
-    PUSHER.PusherOptions options, {
-    bool autoConnect = false,
-  }) =>
-      ConnectorOptions<PUSHER.PusherClient>(
-        client: client,
-        auth: {'headers': options.auth?.headers ?? {}},
-        authEndpoint: options.auth?.endpoint,
-        autoConnect: autoConnect,
-        host: options.host,
-        moreOptions: {
-          'cluster': options.cluster,
-          'encrypted': options.encrypted,
-          'activityTimeout': options.activityTimeout,
-          'pongTimeout': options.pongTimeout,
-          'wsPort': options.wsPort,
-          'wssPort': options.wssPort,
-          'maxReconnectionAttempts': options.maxReconnectionAttempts,
-          'maxReconnectGapInSeconds': options.maxReconnectGapInSeconds,
-        },
-      );
-
-  // add Option item
-  addOption(String key, dynamic value) => moreOptions[key] = value;
-
-  // remove Options item by key
-  removeOption(String key) => moreOptions.remove(key);
-
-  // All Options
-  Map get options => {
-        'auth': auth,
-        'authEndpoint': authEndpoint,
-        'host': host,
-        'key': key,
-        'namespace': namespace,
-        'autoConnect': autoConnect,
-        ...moreOptions,
-      };
-
-  // Get Options
-  Map get toMap => options;
 }

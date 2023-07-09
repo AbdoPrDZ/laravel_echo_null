@@ -71,55 +71,57 @@ class Echo<ClientType, ChannelType> {
   // Init Echo with Socket
   static Echo<IO.Socket, SocketIoChannel> socket(
     String host, {
-    Map? auth,
     String? authEndpoint,
-    String? key,
     String? namespace,
-    bool autoConnect = false,
+    bool autoConnect = true,
+    Map<String, String> authHeaders = const {
+      'Content-Type': 'application/json'
+    },
     Map moreOptions = const {},
   }) =>
       Echo<IO.Socket, SocketIoChannel>(SocketIoConnector(
-        IO.io(host, <String, dynamic>{
-          'autoConnect': autoConnect,
-          'transports': moreOptions.containsKey('transports')
-              ? moreOptions['transports']
-              : []
-        }),
-        auth: auth,
+        host,
         authEndpoint: authEndpoint,
-        host: host,
-        key: key,
         namespace: namespace,
         autoConnect: autoConnect,
+        authHeaders: authHeaders,
         moreOptions: moreOptions,
       ));
 
   // Init Echo with Pusher
   static Echo<PUSHER.PusherClient, PusherChannel> pusher(
-    String appKey,
-    PUSHER.PusherOptions options, {
-    Map? auth,
-    String? authEndpoint,
-    String? host,
-    String? key,
-    String? namespace,
-    bool autoConnect = true,
+    String appKey, {
+    required String authEndPoint,
+    Map<String, String> authHeaders = const {
+      'Content-Type': 'application/json'
+    },
+    String? cluster,
+    required String host,
+    int wsPort = 80,
+    int wssPort = 443,
+    bool encrypted = true,
+    int activityTimeout = 120000,
+    int pongTimeout = 30000,
+    int maxReconnectionAttempts = 6,
+    int maxReconnectGapInSeconds = 30,
     bool enableLogging = true,
-    Map moreOptions = const {},
+    bool autoConnect = true,
   }) =>
-      Echo<PUSHER.PusherClient, PusherChannel>(PusherConnector(
-        PUSHER.PusherClient(
+      Echo<PUSHER.PusherClient, PusherChannel>(
+        PusherConnector(
           appKey,
-          options,
-          autoConnect: autoConnect,
+          authEndPoint: authEndPoint,
+          authHeaders: authHeaders,
+          cluster: cluster,
+          host: host,
+          wsPort: wsPort,
+          encrypted: encrypted,
+          activityTimeout: activityTimeout,
+          pongTimeout: pongTimeout,
+          maxReconnectionAttempts: maxReconnectionAttempts,
+          maxReconnectGapInSeconds: maxReconnectGapInSeconds,
           enableLogging: enableLogging,
+          autoConnect: autoConnect,
         ),
-        auth: auth,
-        authEndpoint: authEndpoint,
-        host: host,
-        key: key,
-        namespace: namespace,
-        autoConnect: autoConnect,
-        moreOptions: moreOptions,
-      ));
+      );
 }

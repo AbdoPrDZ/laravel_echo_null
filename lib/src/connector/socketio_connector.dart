@@ -11,33 +11,30 @@ import 'connector.dart';
 class SocketIoConnector extends Connector<Socket, SocketIoChannel> {
   /// The Socket.io connection instance.
   // Socket get socket => options.client;
-  final Socket socket;
+  // final Socket socket;
 
   @override
-  Socket get client => socket;
+  Socket get client => options.client;
+
+  Socket get socket => client;
 
   SocketIoConnector(
-    this.socket, {
-    Map? auth,
+    String host, {
+    Map<String, String>? authHeaders,
     String? authEndpoint,
-    String? host,
-    String? key,
     String? namespace,
-    bool autoConnect = false,
+    bool autoConnect = true,
     Map moreOptions = const {},
   }) : super(ConnectorOptions(
-          client: socket,
-          auth: auth,
-          authEndpoint: authEndpoint,
-          host: host,
-          key: key,
-          namespace: namespace,
-          moreOptions: moreOptions,
+          client: io(host, {'autoConnect': autoConnect, ...moreOptions}),
+          authHeaders: authHeaders,
+          nameSpace: namespace,
         ));
 
   /// Listen for an event on a channel instance.
   @override
-  SocketIoChannel listen(String name, String event, Function callback) => channel(name).listen(event, callback);
+  SocketIoChannel listen(String name, String event, Function callback) =>
+      channel(name).listen(event, callback);
 
   /// Get a channel instance by name.
   @override

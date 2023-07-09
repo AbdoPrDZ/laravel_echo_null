@@ -1,3 +1,5 @@
+// import 'package:pusher_client_fixed/pusher_client_fixed.dart' as PUSHER;
+
 import 'event_formatter.dart';
 import 'channel.dart';
 
@@ -6,20 +8,17 @@ import 'channel.dart';
 ///
 class PusherChannel extends Channel {
   /// The Pusher client instance.
+  // PUSHER.PusherClient pusher;
   dynamic pusher;
 
   /// The name of the channel.
   String name;
-
-  /// The event formatter.
-  // late EventFormatter eventFormatter;
 
   /// The subscription of the channel.
   dynamic subscription;
 
   /// Create a new class instance.
   PusherChannel(this.pusher, this.name, super.options) {
-    // eventFormatter = EventFormatter(options.namespace);
     subscribe();
   }
 
@@ -37,9 +36,7 @@ class PusherChannel extends Channel {
   /// Listen for an event on the channel instance.
   @override
   PusherChannel listen(String event, Function callback) {
-    // return on(eventFormatter.format(event), callback);
-    return on(EventFormatter.format(event, options.namespace), callback);
-    // return this;
+    return on(EventFormatter.format(event, options.nameSpace), callback);
   }
 
   /// Listen for all events on the channel instance.
@@ -48,7 +45,7 @@ class PusherChannel extends Channel {
       if (event.startsWith('pusher:')) return;
 
       String namespace =
-          options.namespace?.replaceAll(RegExp(r'\.'), '\\') ?? '';
+          options.nameSpace?.replaceAll(RegExp(r'\.'), '\\') ?? '';
       String formattedEvent = event.startsWith(namespace)
           ? event.substring(namespace.length + 1)
           : '.$event';
@@ -62,12 +59,10 @@ class PusherChannel extends Channel {
   @override
   PusherChannel stopListening(String event, [Function? callback]) {
     if (callback != null) {
-      // subscription.unbind(eventFormatter.format(event), callback);
       subscription.unbind(
-          EventFormatter.format(event, options.namespace), callback);
+          EventFormatter.format(event, options.nameSpace), callback);
     } else {
-      // subscription.unbind(eventFormatter.format(event));
-      subscription.unbind(EventFormatter.format(event, options.namespace));
+      subscription.unbind(EventFormatter.format(event, options.nameSpace));
     }
     return this;
   }

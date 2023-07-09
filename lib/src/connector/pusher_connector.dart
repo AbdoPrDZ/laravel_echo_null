@@ -6,36 +6,51 @@ import '../channel/pusher_presence_channel.dart';
 import '../channel/pusher_private_channel.dart';
 import 'connector.dart';
 
-///
-/// This class creates a null connector.
-///
 class PusherConnector extends Connector<PusherClient, PusherChannel> {
-  /// The Pusher connection instance.
-  // PusherClient get pusher => options.client;
-  final PusherClient pusher;
+  PusherClient get pusher => options.client;
 
   @override
   PusherClient get client => pusher;
 
   PusherConnector(
-    this.pusher, {
-    Map? auth,
-    String? authEndpoint,
-    String? host,
-    String? key,
-    String? namespace,
-    bool autoConnect = false,
-    Map moreOptions = const {},
-  }) : super(ConnectorOptions(
-          client: pusher,
-          auth: auth,
-          authEndpoint: authEndpoint,
-          host: host,
-          key: key,
-          namespace: namespace,
-          autoConnect: autoConnect,
-          moreOptions: moreOptions,
-        ));
+    String key, {
+    required String authEndPoint,
+    Map<String, String> authHeaders = const {
+      'Content-Type': 'application/json'
+    },
+    String? cluster,
+    required String host,
+    int wsPort = 80,
+    int wssPort = 443,
+    bool encrypted = true,
+    int activityTimeout = 120000,
+    int pongTimeout = 30000,
+    int maxReconnectionAttempts = 6,
+    int maxReconnectGapInSeconds = 30,
+    bool enableLogging = true,
+    bool autoConnect = true,
+    String? nameSpace,
+  }) : super(
+          ConnectorOptions(
+              client: PusherClient(
+                key,
+                PusherOptions(
+                  auth: PusherAuth(authEndPoint, headers: authHeaders),
+                  cluster: cluster,
+                  host: host,
+                  wsPort: wsPort,
+                  wssPort: wssPort,
+                  encrypted: encrypted,
+                  activityTimeout: activityTimeout,
+                  pongTimeout: pongTimeout,
+                  maxReconnectionAttempts: maxReconnectionAttempts,
+                  maxReconnectGapInSeconds: maxReconnectGapInSeconds,
+                ),
+                enableLogging: enableLogging,
+                autoConnect: autoConnect,
+              ),
+              nameSpace: nameSpace),
+        );
 
   /// Listen for an event on a channel instance.
   @override
