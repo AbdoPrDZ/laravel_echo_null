@@ -23,3 +23,7 @@
 ## 0.0.5
 
 * Clean up the code.
+
+## 0.0.5+1
+
+* Edit README.md

@@ -38,69 +38,46 @@
 
 ### Initializing
 
-- Simple initialization:
-
-  ```dart
-  Echo echo = Echo(Connector(ConnectorOptions(
-    client, // T: Socket / PusherClient
-    auth: {}, // Map?: auth options
-    authEndpoint: 'http://localhost/broadcasting/auth', // String?: auth host
-    host: 'http://localhost', // String?: host
-    key: 'CLIENT_KEY', // String?: client key
-    namespace: 'namespace', // String?: namespace
-    autoConnect: false, // bool: client connection automatically
-    moreOptions: {}, // Map: more echo options
-  )));
-  ```
-
 - Initialization using connector:
 
   ```dart
   //// Socket IO ////
-  import 'package:socket_io_client/socket_io_client.dart';
+  import 'package:socket_io_client/socket_io_client.dart' as IO;
 
-  Socket socket = io('http://localhost');
-  Echo<Socket> echo = Echo<Socket>(SocketIoConnector(
-    socket, // Socket: Socket client
-    auth: {}, // Map?: auth options
-    authEndpoint: 'http://localhost/broadcasting/auth', // String?: auth host
-    host: 'http://localhost', // String?: host
-    key: 'CLIENT_KEY', // String?: client key
-    namespace: 'namespace', // String?: namespace
+  Echo<IO.Socket, SocketIoChannel> echo = Echo<IO.Socket, SocketIoChannel>(SocketIoConnector(
+    'http://localhost:6001', // String: host
+    nameSpace: 'nameSpace', // String?: namespace
     autoConnect: false, // bool: client connection automatically
-    moreOptions: {}, // Map: more echo options
+    authHeaders: {
+      'Authorization': 'Bearer token'
+    },
+    moreOptions: {// Map: more io options
+      'transports': ['websocket']
+    },
   ));
 
   ///// Pusher ////
-  import 'package:pusher_client_fixed/pusher_client_fixed.dart';
+  import 'package:pusher_client_fixed/pusher_client_fixed.dart' as PUSHER;
 
-  PusherClient pusher = PusherClient(
+  Echo<PUSHER.PusherClient, PusherChannel> echo = Echo<PUSHER.PusherClient, PusherChannel>(PusherConnector(
     'PUSHER_APP_KEY',
-    PusherOptions(
-      host: 'http://localhost',
-      wsPort: 6001,
-      cluster: 'mt1',
-      auth: PusherAuth(
-        'http://localhost/broadcasting/auth',
-        headers: {
-          'Authorization': 'Bearer $token',
-          'Content-Type': 'application/json',
-          'Accept': 'application/json',
-        },
-      ),
-    ),
-    autoConnect: false,
+    authEndPoint: 'http://localhost/broadcasting/auth', // String?: auth host
+    authHeaders: { // authenticate headers
+      'Authorization': 'Bearer $token',
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+    },
+    cluster: 'PUSHER_CLUSTER', // String?: pusher cluster
+    host: 'localhost',
+    wsPort: 6001,
+    encrypted: true,
+    activityTimeout: 120000,
+    pongTimeout: 30000,
+    maxReconnectionAttempts: 6,
+    maxReconnectGapInSeconds: 30,
     enableLogging: true,
-  );
-  Echo<PusherClient> echo = Echo<PusherClient>(PusherConnector(
-    pusher, // PusherClient: Pusher client
-    auth: {}, // Map?: auth options
-    authEndpoint: 'http://localhost/broadcasting/auth', // String?: auth host
-    host: 'http://localhost', // String?: host
-    key: 'PUSHER_KEY', // String?: client key
-    namespace: 'namespace', // String?: namespace
     autoConnect: false, // bool: client connection automatically
-    moreOptions: {}, // Map: more echo options
+    nameSpace: 'nameSpace',
   ));
   ```
 
@@ -110,51 +87,40 @@
   //// Socket IO ////
   import 'package:socket_io_client/socket_io_client.dart';
 
-  Echo echo = Echo.socket(
-    'http://127.0.0.1:6001',
-    autoConnect: false,
-    auth: {
-      'headers': {'Authorization': 'Bearer $token'}
+  Echo<IO.Socket, SocketIoChannel> echo = Echo.socket(
+    'http://localhost:6001', // String: host
+    nameSpace: 'nameSpace', // String?: namespace
+    autoConnect: false, // bool: client connection automatically
+    authHeaders: {
+      'Authorization': 'Bearer token'
     },
-    moreOptions: {
-      'transports': ['websocket'],
+    moreOptions: {// Map: more io options
+      'transports': ['websocket']
     },
   );
 
   ///// Pusher ////
   import 'package:pusher_client_fixed/pusher_client_fixed.dart';
-  
-  PusherOptions options = PusherOptions(
-    host: 'http://localhost',
-    wsPort: 6001,
-    cluster: 'mt1',
-    auth: PusherAuth(
-      'http://localhost/broadcasting/auth',
-      headers: {
-        'Authorization': 'Bearer $token',
-        'Content-Type': 'application/json',
-        'Accept': 'application/json',
-      },
-    ),
-  );
 
-  Echo echo = Echo.pusher(
-    'PUSHER_KEY',
-    options,
-    autoConnect: false,
-    auth: options.auth?.toJson(),
-    authEndpoint: options.auth?.endpoint,
-    host: options.host,
-    moreOptions: {
-      'cluster': options.cluster,
-      'encrypted': options.encrypted,
-      'activityTimeout': options.activityTimeout,
-      'pongTimeout': options.pongTimeout,
-      'wsPort': options.wsPort,
-      'wssPort': options.wssPort,
-      'maxReconnectionAttempts': options.maxReconnectionAttempts,
-      'maxReconnectGapInSeconds': options.maxReconnectGapInSeconds,
+  Echo<PUSHER.PusherClient, PusherChannel> echo = Echo.pusher(
+    'PUSHER_APP_KEY',
+    authEndPoint: 'http://localhost/broadcasting/auth', // String?: auth host
+    authHeaders: { // authenticate headers
+      'Authorization': 'Bearer $token',
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
     },
+    cluster: 'PUSHER_CLUSTER', // String?: pusher cluster
+    host: 'localhost',
+    wsPort: 6001,
+    encrypted: true,
+    activityTimeout: 120000,
+    pongTimeout: 30000,
+    maxReconnectionAttempts: 6,
+    maxReconnectGapInSeconds: 30,
+    enableLogging: true,
+    autoConnect: false, // bool: client connection automatically
+    nameSpace: 'nameSpace',
   );
 
   ```

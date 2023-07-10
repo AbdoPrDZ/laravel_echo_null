@@ -71,7 +71,6 @@ class Echo<ClientType, ChannelType> {
   // Init Echo with Socket
   static Echo<IO.Socket, SocketIoChannel> socket(
     String host, {
-    String? authEndpoint,
     String? namespace,
     bool autoConnect = true,
     Map<String, String> authHeaders = const {
@@ -81,7 +80,6 @@ class Echo<ClientType, ChannelType> {
   }) =>
       Echo<IO.Socket, SocketIoChannel>(SocketIoConnector(
         host,
-        authEndpoint: authEndpoint,
         namespace: namespace,
         autoConnect: autoConnect,
         authHeaders: authHeaders,
@@ -106,6 +104,7 @@ class Echo<ClientType, ChannelType> {
     int maxReconnectGapInSeconds = 30,
     bool enableLogging = true,
     bool autoConnect = true,
+    String? nameSpace,
   }) =>
       Echo<PUSHER.PusherClient, PusherChannel>(
         PusherConnector(
@@ -122,6 +121,7 @@ class Echo<ClientType, ChannelType> {
           maxReconnectGapInSeconds: maxReconnectGapInSeconds,
           enableLogging: enableLogging,
           autoConnect: autoConnect,
+          nameSpace: nameSpace,
         ),
       );
 }

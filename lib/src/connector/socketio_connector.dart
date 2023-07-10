@@ -21,7 +21,6 @@ class SocketIoConnector extends Connector<Socket, SocketIoChannel> {
   SocketIoConnector(
     String host, {
     Map<String, String>? authHeaders,
-    String? authEndpoint,
     String? namespace,
     bool autoConnect = true,
     Map moreOptions = const {},
