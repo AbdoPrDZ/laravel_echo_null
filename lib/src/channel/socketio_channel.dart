@@ -13,9 +13,6 @@ class SocketIoChannel extends Channel {
   /// The name of the channel.
   String name;
 
-  /// The event formatter.
-  // late EventFormatter eventFormatter;
-
   /// The event callbacks applied to the socket.
   Map<String, dynamic> events = {};
 
@@ -24,11 +21,11 @@ class SocketIoChannel extends Channel {
 
   /// Create a new class instance.
   SocketIoChannel(this.socket, this.name, super.options) {
-    // eventFormatter = EventFormatter(options.namespace);
     subscribe();
   }
 
   /// Subscribe to a Socket.io channel.
+  @override
   void subscribe() {
     socket.emit('subscribe', {
       'channel': name,
@@ -49,9 +46,7 @@ class SocketIoChannel extends Channel {
   /// Listen for an event on the channel instance.
   @override
   SocketIoChannel listen(String event, Function callback) {
-    // on(eventFormatter.format(event), callback);
     on(EventFormatter.format(event, options.nameSpace), callback);
-
     return this;
   }
 
@@ -59,7 +54,6 @@ class SocketIoChannel extends Channel {
   @override
   SocketIoChannel stopListening(String event, [Function? callback]) {
     _unbindEvent(EventFormatter.format(event, options.nameSpace), callback);
-
     return this;
   }
 
@@ -67,7 +61,6 @@ class SocketIoChannel extends Channel {
   @override
   SocketIoChannel subscribed(Function callback) {
     on('connect', (socket) => callback(socket));
-
     return this;
   }
 

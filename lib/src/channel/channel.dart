@@ -9,6 +9,9 @@ abstract class Channel {
   /// Listen for an event on the channel instance.
   Channel listen(String event, Function callback);
 
+  /// subscribe channel
+  void subscribe();
+
   /// Unsubscribe channel
   void unsubscribe();
 

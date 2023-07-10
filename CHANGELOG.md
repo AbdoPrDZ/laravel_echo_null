@@ -27,3 +27,8 @@
 ## 0.0.5+1
 
 * Edit README.md
+
+
+## 0.0.5+2
+
+* Edit Pusher Channels
