@@ -87,7 +87,7 @@ class _ActionsViewState extends State<ActionsView> {
   void listenToChannel(ChannelType type, String name, String event) {
     if (echo == null) return;
 
-    dynamic channel;
+    Channel? channel;
 
     if (type == ChannelType.public) {
       channel = echo!.channel(name);
@@ -103,7 +103,7 @@ class _ActionsViewState extends State<ActionsView> {
       });
     }
 
-    channel.listen(event, (e) {
+    channel?.listen(event, (e) {
       if (e == null) return;
 
       /**

@@ -28,7 +28,10 @@
 
 * Edit README.md
 
-
 ## 0.0.5+2
 
 * Edit Pusher Channels
+
+## 0.0.5+3
+
+* Update Flutter Sdk version

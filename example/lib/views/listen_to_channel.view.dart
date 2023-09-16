@@ -31,15 +31,12 @@ class _ListenToChannelViewState extends State<ListenToChannelView> {
   String channelName = 'public-channel';
   String event = 'PublicEvent';
   ChannelType channelType = ChannelType.public;
-  late TextEditingController channelNameController;
-  late TextEditingController eventController;
-
-  @override
-  void initState() {
-    super.initState();
-    channelNameController = TextEditingController(text: channelName);
-    eventController = TextEditingController(text: event);
-  }
+  late TextEditingController channelNameController = TextEditingController(
+    text: channelName,
+  );
+  late TextEditingController eventController = TextEditingController(
+    text: event,
+  );
 
   void onChannelTypeChange(ChannelType value) {
     switch (value) {
@@ -124,6 +121,24 @@ class _ListenToChannelViewState extends State<ListenToChannelView> {
                   ),
                 );
                 return;
+              }
+
+              switch (channelType) {
+                case ChannelType.private:
+                  if (channelName.startsWith('private-')) {
+                    channelName = channelName.replaceFirst('private-', '');
+                  }
+                  break;
+                case ChannelType.presence:
+                  if (channelName.startsWith('presence-')) {
+                    channelName = channelName.replaceFirst('presence-', '');
+                  }
+                  break;
+                default:
+                  if (channelName.startsWith('public-')) {
+                    channelName = channelName.replaceFirst('public-', '');
+                  }
+                  break;
               }
 
               widget.onListen(ChannelOptions(
