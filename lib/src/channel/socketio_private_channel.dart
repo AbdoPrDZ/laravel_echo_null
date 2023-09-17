@@ -22,4 +22,9 @@ class SocketIoPrivateChannel extends SocketIoChannel implements PrivateChannel {
 
     return this;
   }
+
+  @override
+  SocketIoChannel onSubscribedSuccess(Function callback) {
+    return listen('channel_subscribe_success', callback);
+  }
 }

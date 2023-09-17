@@ -18,4 +18,9 @@ class PusherPrivateChannel extends PusherChannel implements PrivateChannel {
     subscription.trigger('client-$eventName', data);
     return this;
   }
+
+  @override
+  PusherChannel onSubscribedSuccess(Function callback) {
+    return listen('channel_subscribe_success', callback);
+  }
 }

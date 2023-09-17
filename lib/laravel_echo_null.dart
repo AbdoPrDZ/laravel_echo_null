@@ -1,10 +1,10 @@
 library laravel_echo_null;
 
 // Imports
-import 'package:laravel_echo_null/src/channel/pusher_channel.dart';
-
 import 'src/channel/channel.dart';
 import 'src/channel/presence_channel.dart';
+import 'src/channel/private_channel.dart';
+import 'src/channel/pusher_channel.dart';
 import 'src/channel/socketio_channel.dart';
 import 'src/connector/connector.dart';
 import 'src/connector/pusher_connector.dart';
@@ -19,6 +19,10 @@ export 'src/connector/connector.dart';
 export 'src/connector/pusher_connector.dart';
 export 'src/connector/socketio_connector.dart';
 export 'src/channel/channel.dart';
+export 'src/channel/private_channel.dart';
+export 'src/channel/socketio_private_channel.dart';
+export 'src/channel/presence_channel.dart';
+export 'src/channel/pusher_presence_channel.dart';
 export 'src/channel/socketio_channel.dart';
 export 'src/channel/pusher_channel.dart';
 
@@ -47,7 +51,11 @@ class Echo<ClientType, ChannelType> {
       connector.listen(channel, event, callback);
 
   /// Get a private channel instance by name.
-  Channel private(String channel) => connector.privateChannel(channel);
+  PrivateChannel private(String channel) => connector.privateChannel(channel);
+
+  /// Get a presence channel instance by name.
+  PresenceChannel presence(String channel) =>
+      connector.presenceChannel(channel);
 
   /// Get a private encrypted channel instance by name.
   Channel? encryptedPrivate(String channel) =>

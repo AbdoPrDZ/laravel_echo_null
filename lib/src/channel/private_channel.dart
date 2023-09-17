@@ -8,4 +8,6 @@ abstract class PrivateChannel extends Channel {
 
   /// Register a callback to be called anytime the member list changes.
   PrivateChannel whisper(String eventName, dynamic data);
+
+  Channel onSubscribedSuccess(Function callback);
 }

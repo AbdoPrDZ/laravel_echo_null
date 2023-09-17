@@ -1,5 +1,3 @@
-import 'dart:developer' as dev;
-
 import 'package:flutter/material.dart';
 import 'package:laravel_echo_null/laravel_echo_null.dart';
 import 'package:pusher_client_fixed/pusher_client_fixed.dart' as PUSHER;
@@ -93,13 +91,16 @@ class _ActionsViewState extends State<ActionsView> {
       channel = echo!.channel(name);
     } else if (type == ChannelType.private) {
       channel = echo!.private(name);
+      (channel as PrivateChannel).onSubscribedSuccess((data) {
+        widget.log('channel subscribed data: $data');
+      });
     } else if (type == ChannelType.presence) {
       channel = echo!.join(name).here((users) {
-        dev.log(users);
+        widget.log(users);
       }).joining((user) {
-        dev.log(user);
+        widget.log(user);
       }).leaving((user) {
-        dev.log(user);
+        widget.log(user);
       });
     }
 
@@ -124,7 +125,6 @@ class _ActionsViewState extends State<ActionsView> {
         return;
       }
 
-      dev.log('event: $e');
       widget.log('event: $e');
     });
   }

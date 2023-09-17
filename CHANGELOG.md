@@ -35,3 +35,7 @@
 ## 0.0.5+3
 
 * Update Flutter Sdk version
+
+## 0.0.5+4
+
+* Add on private channel subscribed event

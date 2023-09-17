@@ -10,7 +10,7 @@
   | -------------------------- | --------- | ---------------------------------------------------------------------- |
   | socket_io_client           | 2.0.2     | [pub.dev](https://pub.dev/packages/socket_io_client)                   |
   | pusher_client_fixed        | 0.0.2     | [pub.dev](https://pub.dev/packages/pusher_client_fixed)                |
-  | fixed-laravel-echo-server  | 0.0.1     | [npm](https://www.npmjs.com/package/@abdopr/fixed-laravel-echo-server) |
+  | fixed-laravel-echo-server  | 0.0.2     | [npm](https://www.npmjs.com/package/@abdopr/fixed-laravel-echo-server) |
 
   To include these packages in your project, add the following dependencies to your `pubspec.yaml` file:
 

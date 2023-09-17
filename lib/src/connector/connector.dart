@@ -1,5 +1,6 @@
 import '../channel/channel.dart';
 import '../channel/presence_channel.dart';
+import '../channel/private_channel.dart';
 
 abstract class Connector<ClientType, ChannelType> {
   /// Connector options.
@@ -19,14 +20,14 @@ abstract class Connector<ClientType, ChannelType> {
   Channel channel(String channel);
 
   /// Get a private channel instance by name.
-  Channel privateChannel(String channel);
+  PrivateChannel privateChannel(String channel);
+
+  /// Get a presence channel instance by name.
+  PresenceChannel presenceChannel(String channel);
 
   Channel listen(String channel, String event, Function callback);
 
   Channel? encryptedPrivateChannel(String channel) => null;
-
-  /// Get a presence channel instance by name.
-  PresenceChannel presenceChannel(String channel);
 
   /// Leave the given channel, as well as its private and presence variants.
   void leave(String channel);
