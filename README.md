@@ -6,18 +6,18 @@
 
 - The `laravel_echo_null` package relies on the following packages:
 
-  | Package                    | Version   | URL Source                                                             |
-  | -------------------------- | --------- | ---------------------------------------------------------------------- |
-  | socket_io_client           | 2.0.2     | [pub.dev](https://pub.dev/packages/socket_io_client)                   |
-  | pusher_client_fixed        | 0.0.2     | [pub.dev](https://pub.dev/packages/pusher_client_fixed)                |
-  | fixed-laravel-echo-server  | 0.0.2     | [npm](https://www.npmjs.com/package/@abdopr/fixed-laravel-echo-server) |
+  | Package                   | Version | URL Source                                                             |
+  | ------------------------- | ------- | ---------------------------------------------------------------------- |
+  | socket_io_client          | 2.0.3+1 | [pub.dev](https://pub.dev/packages/socket_io_client)                   |
+  | pusher_client_fixed       | 0.0.2+1 | [pub.dev](https://pub.dev/packages/pusher_client_fixed)                |
+  | fixed-laravel-echo-server | 0.0.2   | [npm](https://www.npmjs.com/package/@abdopr/fixed-laravel-echo-server) |
 
   To include these packages in your project, add the following dependencies to your `pubspec.yaml` file:
 
   ```yaml
   dependencies:
-    socket_io_client: ^2.0.2
-    pusher_client_fixed: ^0.0.2
+    socket_io_client: ^2.0.3+1
+    pusher_client_fixed: ^0.0.2+1
   ```
 
   Please note that the `laravel_echo_null` package requires the `socket_io_client` package at version 2.0.2. Additionally, to ensure compatibility with the package, use the `fixed-laravel-echo-server` version 0.0.1, which is available on npm. You can install it globally by running the following command:
@@ -28,7 +28,7 @@
 
   For more information, please refer to the [official documentation](https://pub.dev/packages/socket_io_client) of `fixed-laravel-echo-server`.
 
-  Make sure to add these dependencies and follow the instructions to include them properly in your project  
+  Make sure to add these dependencies and follow the instructions to include them properly in your project
 
 ### Importing
 
@@ -147,11 +147,11 @@
   });
   ```
 
-----------------------------------------------------------------------------------------------------------------------------
+---
 
 ## `Note: This Package is the improved version of the original package "laravel_echo", with some modifications and features`
 
-----------------------------------------------------------------------------------------------------------------------------
+---
 
 ## Powered By Abdo-Pr
 
