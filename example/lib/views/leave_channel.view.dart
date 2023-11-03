@@ -39,9 +39,7 @@ class _LeaveChannelViewState extends State<LeaveChannelView> {
           ),
           const SizedBox(height: 10),
           TextButton(
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
+            onPressed: () => Navigator.of(context).pop(),
             child: const Text('Close'),
           ),
         ],
@@ -53,17 +51,18 @@ class _LeaveChannelViewState extends State<LeaveChannelView> {
       padding: const EdgeInsets.all(20),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: <Widget>[
+        children: [
           DropdownButton<String>(
             value: name,
             isExpanded: true,
             hint: const Text('Please choose channel name'),
-            items: widget.listeningChannels.map((String value) {
-              return DropdownMenuItem<String>(
-                value: value,
-                child: Text(value),
-              );
-            }).toList(),
+            items: [
+              for (String value in widget.listeningChannels)
+                DropdownMenuItem<String>(
+                  value: value,
+                  child: Text(value),
+                )
+            ],
             onChanged: (String? value) => setState(() => name = value!),
           ),
           const SizedBox(height: 20),

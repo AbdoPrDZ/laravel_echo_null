@@ -47,9 +47,7 @@ class _HomeState extends State<Home> {
             ),
           },
           onValueChanged: (String value) {
-            setState(() {
-              broadcaster = value;
-            });
+            setState(() => broadcaster = value);
             log('switched to $value');
           },
           groupValue: broadcaster,

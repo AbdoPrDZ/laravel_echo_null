@@ -18,7 +18,6 @@ class SocketIoPresenceChannel extends SocketIoPrivateChannel
     on('presence:subscribed', (List<dynamic> members) {
       callback(members.map((member) => member['user_info']));
     });
-
     return this;
   }
 
@@ -26,7 +25,6 @@ class SocketIoPresenceChannel extends SocketIoPrivateChannel
   @override
   SocketIoPresenceChannel joining(Function callback) {
     on('presence:joining', (member) => callback(member['user_info']));
-
     return this;
   }
 
@@ -34,7 +32,6 @@ class SocketIoPresenceChannel extends SocketIoPrivateChannel
   @override
   SocketIoPresenceChannel leaving(Function callback) {
     on('presence:leaving', (member) => callback(member['user_info']));
-
     return this;
   }
 }

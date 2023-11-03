@@ -4,16 +4,15 @@ import '../channel/private_channel.dart';
 
 abstract class Connector<ClientType, ChannelType> {
   /// Connector options.
-  // ConnectorOptions options;
   ConnectorOptions<ClientType> options;
 
   /// Create a new class instance.
   Connector(this.options);
 
-  // getting client
+  /// getting client
   ClientType get client;
 
-  // All of the subscribed channel names.
+  /// All of the subscribed channel names.
   Map<String, ChannelType> channels = {};
 
   /// Get a channel instance by name.
@@ -25,6 +24,7 @@ abstract class Connector<ClientType, ChannelType> {
   /// Get a presence channel instance by name.
   PresenceChannel presenceChannel(String channel);
 
+  /// listen to channel event
   Channel listen(String channel, String event, Function callback);
 
   Channel? encryptedPrivateChannel(String channel) => null;
@@ -44,12 +44,16 @@ abstract class Connector<ClientType, ChannelType> {
   /// Disconnect from the Echo server.
   void disconnect();
 
+  /// listen to on connect event
   void onConnect(Function(dynamic data) handler) {}
 
+  /// listen to on connect error event
   void onConnectError(Function(dynamic data) handler) {}
 
+  /// listen to on disconnect event
   void onDisconnect(Function(dynamic data) handler) {}
 
+  /// listen to on error event
   void onError(Function(dynamic data) handler) {}
 }
 

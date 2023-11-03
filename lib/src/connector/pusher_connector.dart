@@ -19,7 +19,7 @@ class PusherConnector extends Connector<PusherClient, PusherChannel> {
       'Content-Type': 'application/json'
     },
     String? cluster,
-    required String host,
+    String host = "ws.pusherapp.com",
     int wsPort = 80,
     int wssPort = 443,
     bool encrypted = true,

@@ -34,7 +34,6 @@ class PusherPresenceChannel extends PusherChannel implements PresenceChannel {
 
   /// Trigger client event on the channel.
   PusherPresenceChannel whisper(String eventName, dynamic data) {
-    // pusher.channels[name].trigger('client-$eventName', data);
     subscription.trigger('client-$eventName', data);
     return this;
   }

@@ -19,12 +19,10 @@ class SocketIoPrivateChannel extends SocketIoChannel implements PrivateChannel {
       'event': 'client-$eventName',
       'data': data,
     });
-
     return this;
   }
 
   @override
-  SocketIoChannel onSubscribedSuccess(Function callback) {
-    return listen('channel_subscribe_success', callback);
-  }
+  SocketIoChannel onSubscribedSuccess(Function callback) =>
+      listen('channel_subscribe_success', callback);
 }

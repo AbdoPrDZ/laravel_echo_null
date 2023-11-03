@@ -4,7 +4,7 @@ import 'channel.dart';
 /// This interface represents a presence channel.
 ///
 abstract class PresenceChannel extends Channel {
-  PresenceChannel(super.options);
+  const PresenceChannel(super.options);
 
   /// Register a callback to be called anytime the member list changes.
   PresenceChannel here(Function callback);

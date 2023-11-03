@@ -76,7 +76,7 @@ class Echo<ClientType, ChannelType> {
   /// Get the Socket ID for the connection.
   String? get socketId => connector.socketId;
 
-  // Init Echo with Socket
+  /// Init Echo with Socket client
   static Echo<IO.Socket, SocketIoChannel> socket(
     String host, {
     String? namespace,
@@ -94,7 +94,7 @@ class Echo<ClientType, ChannelType> {
         moreOptions: moreOptions,
       ));
 
-  // Init Echo with Pusher
+  /// Init Echo with Pusher client
   static Echo<PUSHER.PusherClient, PusherChannel> pusher(
     String appKey, {
     required String authEndPoint,
@@ -102,7 +102,7 @@ class Echo<ClientType, ChannelType> {
       'Content-Type': 'application/json'
     },
     String? cluster,
-    required String host,
+    String host = "ws.pusherapp.com",
     int wsPort = 80,
     int wssPort = 443,
     bool encrypted = true,

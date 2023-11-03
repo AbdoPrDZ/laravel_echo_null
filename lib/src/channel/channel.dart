@@ -2,9 +2,9 @@ import '../connector/connector.dart';
 
 abstract class Channel {
   /// The Echo options.
-  ConnectorOptions options;
+  final ConnectorOptions options;
 
-  Channel(this.options);
+  const Channel(this.options);
 
   /// Listen for an event on the channel instance.
   Channel listen(String event, Function callback);

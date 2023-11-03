@@ -4,10 +4,8 @@ import 'package:pusher_client_fixed/pusher_client_fixed.dart';
 const String appId = "1321495";
 const String key = "037c47e0cbdc81fb7144";
 const String cluster = "mt1";
-const String hostEndPoint = "192.168.1.105";
-const String hostAuthEndPoint = "http://$hostEndPoint/broadcasting/auth";
-const String token = "34|yzWaxwGZz75Xqk4tXviP4uhAc0sVB14OLVXEmoxg";
-const int port = 6001;
+const String hostAuthEndPoint = "http://localhost/broadcasting/auth";
+const String token = "2|2gAA0Z1w43jasatIFaw0MD3H8LSDeGIoK2sCtTDw6ac6eb51";
 
 Echo<PusherClient, PusherChannel> initPusherClient(
   Function(String message) log,
@@ -15,13 +13,8 @@ Echo<PusherClient, PusherChannel> initPusherClient(
   Echo<PusherClient, PusherChannel> pusherEcho = Echo.pusher(
     key,
     authEndPoint: hostAuthEndPoint,
-    authHeaders: {
-      'Authorization': 'Bearer $token',
-    },
+    authHeaders: {'Authorization': 'Bearer $token'},
     cluster: cluster,
-    host: hostEndPoint,
-    wsPort: port,
-    encrypted: true,
     enableLogging: true,
     autoConnect: false,
   );

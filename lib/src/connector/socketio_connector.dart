@@ -9,13 +9,11 @@ import 'connector.dart';
 /// This class creates a connector to a Socket.io server.
 ///
 class SocketIoConnector extends Connector<Socket, SocketIoChannel> {
-  /// The Socket.io connection instance.
-  // Socket get socket => options.client;
-  // final Socket socket;
-
+  /// getting the client
   @override
   Socket get client => options.client;
 
+  /// getting socket client
   Socket get socket => client;
 
   SocketIoConnector(
@@ -32,8 +30,8 @@ class SocketIoConnector extends Connector<Socket, SocketIoChannel> {
 
   /// Listen for an event on a channel instance.
   @override
-  SocketIoChannel listen(String name, String event, Function callback) =>
-      channel(name).listen(event, callback);
+  SocketIoChannel listen(String channel, String event, Function callback) =>
+      this.channel(channel).listen(event, callback);
 
   /// Get a channel instance by name.
   @override
@@ -108,22 +106,26 @@ class SocketIoConnector extends Connector<Socket, SocketIoChannel> {
     });
   }
 
-  /// Disconnect Socketio connection.
+  /// Disconnect Socket.io connection.
   @override
   void disconnect() => socket.disconnect();
 
+  /// listen to on connect event
   @override
   void onConnect(Function(dynamic data) handler) =>
       socket.onConnect((data) => handler(data));
 
+  /// listen to on connect error event
   @override
   void onConnectError(Function(dynamic data) handler) =>
       socket.onConnectError((data) => handler(data));
 
+  /// listen to on disconnect event
   @override
   void onDisconnect(Function(dynamic data) handler) =>
       socket.onDisconnect((data) => handler(data));
 
+  /// lsiten to on error event
   @override
   void onError(Function(dynamic data) handler) =>
       socket.onError((data) => handler(data));

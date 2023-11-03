@@ -138,7 +138,7 @@ class _ActionsViewState extends State<ActionsView> {
   @override
   Widget build(BuildContext context) {
     return ListView(
-      children: <Widget>[
+      children: [
         ListTile(
           title: Text(
             isConnected ? 'disconnect' : 'connect',
@@ -154,7 +154,6 @@ class _ActionsViewState extends State<ActionsView> {
               width: 20,
             ),
           ),
-          // onTap: isConnected ? echo.disconnect() : echo.connect(),
           onTap: () {
             if (isConnected) {
               widget.log('disconnecting ${widget.broadcaster}');
@@ -189,11 +188,9 @@ class _ActionsViewState extends State<ActionsView> {
             builder: (_) => Scaffold(
               body: ListenToChannelView(
                 onListen: (ChannelOptions options) {
-                  String channelType =
-                      options.channelType.toString().substring(12);
-
                   widget.log(
-                      'Listening to $channelType channel: ${options.channelName}');
+                    'Listening to ${options.channelType} channel: ${options.channelName}',
+                  );
 
                   listenToChannel(
                     options.channelType,
@@ -202,9 +199,7 @@ class _ActionsViewState extends State<ActionsView> {
                   );
 
                   if (!listeningChannels.contains(options.channelName)) {
-                    setState(() {
-                      listeningChannels.add(options.channelName);
-                    });
+                    setState(() => listeningChannels.add(options.channelName));
                   }
 
                   Navigator.of(context).pop();

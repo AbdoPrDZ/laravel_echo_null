@@ -26,7 +26,7 @@
   npm i -g @abdopr/fixed-laravel-echo-server
   ```
 
-  For more information, please refer to the [official documentation](https://pub.dev/packages/socket_io_client) of `fixed-laravel-echo-server`.
+  For more information, please refer to the [official documentation](https://www.npmjs.com/package/@abdopr/fixed-laravel-echo-server) of `fixed-laravel-echo-server`.
 
   Make sure to add these dependencies and follow the instructions to include them properly in your project
 
@@ -68,8 +68,9 @@
       'Accept': 'application/json',
     },
     cluster: 'PUSHER_CLUSTER', // String?: pusher cluster
-    host: 'localhost',
-    wsPort: 6001,
+    host: 'ws.pusherapp.com',
+    wsPort: 80,
+    wssPort: 443,
     encrypted: true,
     activityTimeout: 120000,
     pongTimeout: 30000,
@@ -111,8 +112,9 @@
       'Accept': 'application/json',
     },
     cluster: 'PUSHER_CLUSTER', // String?: pusher cluster
-    host: 'localhost',
-    wsPort: 6001,
+    host: 'ws.pusherapp.com',
+    wsPort: 80,
+    wssPort: 443
     encrypted: true,
     activityTimeout: 120000,
     pongTimeout: 30000,

@@ -8,30 +8,28 @@ import 'channel.dart';
 ///
 class SocketIoChannel extends Channel {
   /// The Socket.io client instance.
-  Socket socket;
+  final Socket socket;
 
   /// The name of the channel.
-  String name;
-
-  /// The event callbacks applied to the socket.
-  Map<String, dynamic> events = {};
-
-  /// User supplied callbacks for events on this channel
-  Map<String, List> listeners = {};
+  final String name;
 
   /// Create a new class instance.
   SocketIoChannel(this.socket, this.name, super.options) {
     subscribe();
   }
 
+  /// The event callbacks applied to the socket.
+  final Map<String, dynamic> events = {};
+
+  /// User supplied callbacks for events on this channel
+  final Map<String, List> listeners = {};
+
   /// Subscribe to a Socket.io channel.
   @override
-  void subscribe() {
-    socket.emit('subscribe', {
-      'channel': name,
-      'auth': {'headers': options.authHeaders},
-    });
-  }
+  void subscribe() => socket.emit('subscribe', {
+        'channel': name,
+        'auth': {'headers': options.authHeaders},
+      });
 
   /// Unsubscribe from channel and unbind event callbacks.
   @override
@@ -66,9 +64,7 @@ class SocketIoChannel extends Channel {
 
   /// Register a callback to be called anytime an error occurs.
   @override
-  SocketIoChannel error(Function callback) {
-    return this;
-  }
+  SocketIoChannel error(Function callback) => this;
 
   /// Bind the channel's socket to an event and store the callback.
   SocketIoChannel on(String event, Function callback) {
@@ -94,11 +90,9 @@ class SocketIoChannel extends Channel {
   }
 
   /// Unbind the channel's socket from all stored event callbacks.
-  void unbind() {
-    for (var event in List.from(events.keys)) {
-      _unbindEvent(event);
-    }
-  }
+  void unbind() => events.keys.forEach((event) {
+        _unbindEvent(event);
+      });
 
   /// Unbind the listeners for the given event.
   void _unbindEvent(String event, [Function? callback]) {

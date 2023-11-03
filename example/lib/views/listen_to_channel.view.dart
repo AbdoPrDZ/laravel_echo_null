@@ -9,11 +9,7 @@ class ChannelOptions {
   ChannelOptions(this.channelName, this.channelType, this.event);
 }
 
-enum ChannelType {
-  public,
-  private,
-  presence,
-}
+enum ChannelType { public, private, presence }
 
 class ListenToChannelView extends StatefulWidget {
   final ValueChanged<ChannelOptions> onListen;
@@ -66,89 +62,87 @@ class _ListenToChannelViewState extends State<ListenToChannelView> {
     return Container(
       color: Colors.white,
       padding: const EdgeInsets.all(20),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: <Widget>[
-          CupertinoSegmentedControl<ChannelType>(
-            groupValue: channelType,
-            onValueChanged: onChannelTypeChange,
-            children: const {
-              ChannelType.public: Text('public'),
-              ChannelType.private: Text('private'),
-              ChannelType.presence: Text('presence'),
-            },
-          ),
-          const SizedBox(height: 25),
-          TextField(
-            controller: channelNameController,
-            decoration: const InputDecoration(
-              labelText: 'Channel name',
-              border: OutlineInputBorder(),
-              contentPadding: EdgeInsets.symmetric(
-                vertical: 8,
-                horizontal: 12,
+      child: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            CupertinoSegmentedControl<ChannelType>(
+              groupValue: channelType,
+              onValueChanged: onChannelTypeChange,
+              children: const {
+                ChannelType.public: Text('public'),
+                ChannelType.private: Text('private'),
+                ChannelType.presence: Text('presence'),
+              },
+            ),
+            const SizedBox(height: 25),
+            TextField(
+              controller: channelNameController,
+              decoration: const InputDecoration(
+                labelText: 'Channel name',
+                border: OutlineInputBorder(),
+                contentPadding: EdgeInsets.symmetric(
+                  vertical: 8,
+                  horizontal: 12,
+                ),
               ),
+              onChanged: (String value) => setState(() => channelName = value),
             ),
-            onChanged: (String value) {
-              setState(() => channelName = value);
-            },
-          ),
-          const SizedBox(height: 20),
-          TextField(
-            controller: eventController,
-            decoration: const InputDecoration(
-              labelText: 'Event name',
-              border: OutlineInputBorder(),
-              contentPadding: EdgeInsets.symmetric(
-                vertical: 8,
-                horizontal: 12,
+            const SizedBox(height: 20),
+            TextField(
+              controller: eventController,
+              decoration: const InputDecoration(
+                labelText: 'Event name',
+                border: OutlineInputBorder(),
+                contentPadding: EdgeInsets.symmetric(
+                  vertical: 8,
+                  horizontal: 12,
+                ),
               ),
+              onChanged: (String value) => setState(() => event = value),
             ),
-            onChanged: (String value) => setState(() => event = value),
-          ),
-          const SizedBox(height: 25),
-          ElevatedButton(
-            style: ElevatedButton.styleFrom(
-              fixedSize: const Size.fromHeight(44),
+            const SizedBox(height: 25),
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                fixedSize: const Size.fromHeight(44),
+              ),
+              child: const Text('Listen'),
+              onPressed: () {
+                if (channelName.isEmpty || event.isEmpty) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text('Please fill all fields'),
+                      behavior: SnackBarBehavior.floating,
+                    ),
+                  );
+                } else {
+                  switch (channelType) {
+                    case ChannelType.private:
+                      if (channelName.startsWith('private-')) {
+                        channelName = channelName.replaceFirst('private-', '');
+                      }
+                      break;
+                    case ChannelType.presence:
+                      if (channelName.startsWith('presence-')) {
+                        channelName = channelName.replaceFirst('presence-', '');
+                      }
+                      break;
+                    default:
+                      if (channelName.startsWith('public-')) {
+                        channelName = channelName.replaceFirst('public-', '');
+                      }
+                      break;
+                  }
+                  widget.onListen(ChannelOptions(
+                    channelName,
+                    channelType,
+                    event,
+                  ));
+                }
+              },
             ),
-            child: const Text('Listen'),
-            onPressed: () {
-              if (channelName.isEmpty || event.isEmpty) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(
-                    content: Text('Please fill all fields'),
-                    behavior: SnackBarBehavior.floating,
-                  ),
-                );
-                return;
-              }
-
-              switch (channelType) {
-                case ChannelType.private:
-                  if (channelName.startsWith('private-')) {
-                    channelName = channelName.replaceFirst('private-', '');
-                  }
-                  break;
-                case ChannelType.presence:
-                  if (channelName.startsWith('presence-')) {
-                    channelName = channelName.replaceFirst('presence-', '');
-                  }
-                  break;
-                default:
-                  if (channelName.startsWith('public-')) {
-                    channelName = channelName.replaceFirst('public-', '');
-                  }
-                  break;
-              }
-
-              widget.onListen(ChannelOptions(
-                channelName,
-                channelType,
-                event,
-              ));
-            },
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
