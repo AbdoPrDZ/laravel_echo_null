@@ -12,8 +12,8 @@ dependencies:
   cupertino_icons: ^1.0.2
   laravel_echo_null:
     path: ../
-  pusher_client_fixed: ^0.0.1
-  socket_io_client: ^2.0.2
+  pusher_client_fixed: ^0.0.2+2
+  socket_io_client: ^2.0.3+1
 
 dev_dependencies:
   flutter_test:

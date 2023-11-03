@@ -47,3 +47,7 @@
 ## 0.0.5+6
 
 - Fix onSubscribeSuccess event in pusher client
+
+## 0.0.5+7
+
+- Upgrade dependencies
