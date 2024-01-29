@@ -51,3 +51,7 @@
 ## 0.0.5+7
 
 - Upgrade dependencies
+
+## 0.0.5+8
+
+- Upgrade dependencies

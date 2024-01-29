@@ -4,8 +4,8 @@ import 'package:pusher_client_fixed/pusher_client_fixed.dart';
 const String appId = "1321495";
 const String key = "037c47e0cbdc81fb7144";
 const String cluster = "mt1";
-const String hostAuthEndPoint = "http://localhost/broadcasting/auth";
-const String token = "2|2gAA0Z1w43jasatIFaw0MD3H8LSDeGIoK2sCtTDw6ac6eb51";
+const String hostAuthEndPoint = "http://192.168.1.100/broadcasting/auth";
+const String token = "1|4X1WDn5stL0e8FK9TDRNodkTcc7CrT6GsKzDf9Cd62b08640";
 
 Echo<PusherClient, PusherChannel> initPusherClient(
   Function(String message) log,
