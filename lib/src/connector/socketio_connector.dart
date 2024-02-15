@@ -23,7 +23,11 @@ class SocketIoConnector extends Connector<Socket, SocketIoChannel> {
     bool autoConnect = true,
     Map moreOptions = const {},
   }) : super(ConnectorOptions(
-          client: io(host, {'autoConnect': autoConnect, ...moreOptions}),
+          client: io(host, {
+            'autoConnect': autoConnect,
+            ...moreOptions,
+            'auth': {'headers': authHeaders},
+          }),
           authHeaders: authHeaders,
           nameSpace: namespace,
         ));

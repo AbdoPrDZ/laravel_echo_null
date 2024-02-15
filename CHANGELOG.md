@@ -55,3 +55,7 @@
 ## 0.0.5+8
 
 - Upgrade dependencies
+
+## 0.0.5+9
+
+- Add auth headers with socket client options
