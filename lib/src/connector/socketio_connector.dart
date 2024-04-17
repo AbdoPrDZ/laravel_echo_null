@@ -126,18 +126,48 @@ class SocketIoConnector extends Connector<Socket, SocketIoChannel> {
   void onConnectError(Function(dynamic data) handler) =>
       socket.onConnectError((data) => handler(data));
 
+  /// listen to on connect timeout event
+  @override
+  void onConnectTimeout(Function(dynamic data) handler) =>
+      socket.onConnectTimeout((data) => handler(data));
+
+  /// listen to on connecting event
+  @override
+  void onConnecting(Function(dynamic data) handler) =>
+      socket.onConnecting((data) => handler(data));
+
   /// listen to on disconnect event
   @override
   void onDisconnect(Function(dynamic data) handler) =>
       socket.onDisconnect((data) => handler(data));
 
-  /// listen to on disconnect event
-  @override
-  void onReconnect(Function(dynamic data) handler) =>
-      socket.onReconnect((data) => handler(data));
-
   /// listen to on error event
   @override
   void onError(Function(dynamic data) handler) =>
       socket.onError((data) => handler(data));
+
+  /// listen to on reconnect event
+  @override
+  void onReconnect(Function(dynamic data) handler) =>
+      socket.onReconnect((data) => handler(data));
+
+  /// listen to on reconnect attempt event
+  @override
+  void onReconnectAttempt(Function(dynamic data) handler) =>
+      socket.onReconnectAttempt((data) => handler(data));
+
+  /// listen to on reconnect failed event
+  @override
+  void onReconnectFailed(Function(dynamic data) handler) =>
+      socket.onReconnectFailed((data) => handler(data));
+
+  /// listen to on reconnect error event
+  @override
+  void onReconnectError(Function(dynamic data) handler) =>
+      socket.onReconnectError((data) => handler(data));
+
+  /// listen to on reconnecting event
+  @override
+  void onReconnecting(Function(dynamic data) handler) =>
+      socket.onReconnecting((data) => handler(data));
 }

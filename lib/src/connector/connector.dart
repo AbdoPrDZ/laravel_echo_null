@@ -50,14 +50,32 @@ abstract class Connector<ClientType, ChannelType> {
   /// listen to on connect error event
   void onConnectError(Function(dynamic data) handler) {}
 
+  /// listen to on connect timeout event
+  void onConnectTimeout(Function(dynamic data) handler) {}
+
+  /// listen to on connecting event
+  void onConnecting(Function(dynamic data) handler) {}
+
   /// listen to on disconnect event
   void onDisconnect(Function(dynamic data) handler) {}
+
+  /// listen to on error event
+  void onError(Function(dynamic data) handler) {}
 
   /// listen to on reconnected event
   void onReconnect(Function(dynamic data) handler) {}
 
-  /// listen to on error event
-  void onError(Function(dynamic data) handler) {}
+  /// listen to on reconnect attempt event
+  void onReconnectAttempt(Function(dynamic data) handler) {}
+
+  /// listen to on reconnect failed event
+  void onReconnectFailed(Function(dynamic data) handler) {}
+
+  /// listen to on reconnect error event
+  void onReconnectError(Function(dynamic data) handler) {}
+
+  /// listen to on reconnecting event
+  void onReconnecting(Function(dynamic data) handler) {}
 }
 
 class ConnectorOptions<T> {
