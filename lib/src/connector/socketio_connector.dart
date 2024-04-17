@@ -129,6 +129,11 @@ class SocketIoConnector extends Connector<Socket, SocketIoChannel> {
   void onDisconnect(Function(dynamic data) handler) =>
       socket.onDisconnect((data) => handler(data));
 
+  /// listen to on disconnect event
+  @override
+  void onReconnect(Function(dynamic data) handler) =>
+      socket.onReconnect((data) => handler(data));
+
   /// lsiten to on error event
   @override
   void onError(Function(dynamic data) handler) =>

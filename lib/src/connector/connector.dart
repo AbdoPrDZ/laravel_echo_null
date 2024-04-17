@@ -53,6 +53,9 @@ abstract class Connector<ClientType, ChannelType> {
   /// listen to on disconnect event
   void onDisconnect(Function(dynamic data) handler) {}
 
+  /// listen to on reconnected event
+  void onReconnect(Function(dynamic data) handler) {}
+
   /// listen to on error event
   void onError(Function(dynamic data) handler) {}
 }
