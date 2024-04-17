@@ -104,8 +104,7 @@ class SocketIoConnector extends Connector<Socket, SocketIoChannel> {
     socket.connect();
 
     // Reconnect to all channels
-    socket.on(
-      'reconnect',
+    onReconnect(
       (_) => [
         for (final channel in channels.values) channel.subscribe(),
       ],
