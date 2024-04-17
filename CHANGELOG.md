@@ -59,3 +59,8 @@
 ## 0.0.5+9
 
 - Add auth headers with socket client options
+
+## 0.0.5+10
+
+- Edit socket.io connector connect function.
+- Add other events handlers in connector.
