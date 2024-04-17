@@ -103,11 +103,13 @@ class SocketIoConnector extends Connector<Socket, SocketIoChannel> {
   void connect() {
     socket.connect();
 
-    socket.on('reconnect', (_) {
-      for (var channel in channels.values) {
-        channel.subscribe();
-      }
-    });
+    // Reconnect to all channels
+    socket.on(
+      'reconnect',
+      (_) => [
+        for (final channel in channels.values) channel.subscribe(),
+      ],
+    );
   }
 
   /// Disconnect Socket.io connection.
