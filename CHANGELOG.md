@@ -64,3 +64,9 @@
 
 - Edit socket.io connector connect function.
 - Add other events handlers in connector.
+
+## 0.0.6 - May 13, 2024
+
+- Update readme.
+- Upgrade flutter sdk and dependencies.
+- Edit example.
