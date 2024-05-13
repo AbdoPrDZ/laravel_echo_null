@@ -9,15 +9,15 @@
   | Package                   | Version | URL Source                                                             |
   | ------------------------- | ------- | ---------------------------------------------------------------------- |
   | socket_io_client          | 2.0.3+1 | [pub.dev](https://pub.dev/packages/socket_io_client)                   |
-  | pusher_client_fixed       | 0.0.2+2 | [pub.dev](https://pub.dev/packages/pusher_client_fixed)                |
-  | fixed-laravel-echo-server | 0.0.2   | [npm](https://www.npmjs.com/package/@abdopr/fixed-laravel-echo-server) |
+  | pusher_client_fixed       | 0.0.4   | [pub.dev](https://pub.dev/packages/pusher_client_fixed)                |
+  | fixed-laravel-echo-server | 0.1.3   | [npm](https://www.npmjs.com/package/@abdopr/fixed-laravel-echo-server) |
 
   To include these packages in your project, add the following dependencies to your `pubspec.yaml` file:
 
   ```yaml
   dependencies:
     socket_io_client: ^2.0.3+1
-    pusher_client_fixed: ^0.0.2+2
+    pusher_client_fixed: ^0.0.4
   ```
 
   Please note that the `laravel_echo_null` package requires the `socket_io_client` package at version 2.0.2. Additionally, to ensure compatibility with the package, use the `fixed-laravel-echo-server` version 0.0.1, which is available on npm. You can install it globally by running the following command:
