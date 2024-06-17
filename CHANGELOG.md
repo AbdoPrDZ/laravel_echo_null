@@ -70,3 +70,7 @@
 - Update readme.
 - Upgrade flutter sdk and dependencies.
 - Edit example.
+
+## 0.0.6 - May 13, 2024
+
+- Upgrade flutter sdk and dependencies.
