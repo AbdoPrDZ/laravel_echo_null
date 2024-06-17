@@ -1,6 +1,6 @@
 name: laravel_echo_null
 description: This Package is the improved version of the original package "laravel_echo", with some modifications and features.
-version: 0.0.6
+version: 0.0.6+1
 homepage: https://github.com/AIabdoPr/laravel_echo_null.git
 
 environment:
