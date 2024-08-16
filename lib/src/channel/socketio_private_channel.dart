@@ -13,14 +13,12 @@ class SocketIoPrivateChannel extends SocketIoChannel implements PrivateChannel {
 
   /// Trigger client event on the channel.
   @override
-  SocketIoPrivateChannel whisper(String eventName, dynamic data) {
-    socket.emit('client event', {
+  SocketIoPrivateChannel whisper(String eventName, dynamic data) => this
+    ..socket.emit('client event', {
       'channel': name,
       'event': 'client-$eventName',
       'data': data,
     });
-    return this;
-  }
 
   @override
   SocketIoChannel onSubscribedSuccess(Function callback) =>

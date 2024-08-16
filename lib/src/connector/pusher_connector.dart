@@ -1,4 +1,6 @@
-import 'package:pusher_client_fixed/pusher_client_fixed.dart';
+import 'dart:typed_data';
+
+import 'package:pusher_client_socket/pusher_client_socket.dart';
 
 import '../channel/pusher_channel.dart';
 import '../channel/pusher_encrypted_private_channel.dart';
@@ -19,7 +21,10 @@ class PusherConnector extends Connector<PusherClient, PusherChannel> {
       'Content-Type': 'application/json'
     },
     String? cluster,
-    String host = "ws.pusherapp.com",
+    Protocol protocol = Protocol.ws,
+    String? host,
+    Map<String, dynamic> Function(Uint8List, Map<String, dynamic>)?
+        channelDecryption,
     int wsPort = 80,
     int wssPort = 443,
     bool encrypted = true,
@@ -32,24 +37,30 @@ class PusherConnector extends Connector<PusherClient, PusherChannel> {
     String? nameSpace,
   }) : super(
           ConnectorOptions(
-              client: PusherClient(
-                key,
-                PusherOptions(
-                  auth: PusherAuth(authEndPoint, headers: authHeaders),
-                  cluster: cluster,
-                  host: host,
-                  wsPort: wsPort,
-                  wssPort: wssPort,
-                  encrypted: encrypted,
-                  activityTimeout: activityTimeout,
-                  pongTimeout: pongTimeout,
-                  maxReconnectionAttempts: maxReconnectionAttempts,
-                  maxReconnectGapInSeconds: maxReconnectGapInSeconds,
+            client: PusherClient(
+              options: PusherOptions(
+                key: key,
+                authOptions: PusherAuthOptions(
+                  authEndPoint,
+                  headers: authHeaders,
                 ),
+                cluster: cluster,
+                protocol: protocol,
+                channelDecryption: channelDecryption,
+                host: host,
+                // wsPort: wsPort,
+                // wssPort: wssPort,
+                // encrypted: encrypted,
+                activityTimeout: activityTimeout,
+                pongTimeout: pongTimeout,
+                // maxReconnectionAttempts: maxReconnectionAttempts,
+                // maxReconnectGapInSeconds: maxReconnectGapInSeconds,
                 enableLogging: enableLogging,
                 autoConnect: autoConnect,
               ),
-              nameSpace: nameSpace),
+            ),
+            nameSpace: nameSpace,
+          ),
         );
 
   /// Listen for an event on a channel instance.
@@ -125,7 +136,7 @@ class PusherConnector extends Connector<PusherClient, PusherChannel> {
 
   /// Get the socket ID for the connection.
   @override
-  String? get socketId => pusher.getSocketId();
+  String? get socketId => pusher.socketId;
 
   /// Create a fresh Pusher connection.
   @override

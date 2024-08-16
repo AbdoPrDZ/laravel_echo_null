@@ -9,7 +9,7 @@
   | Package                   | Version | URL Source                                                             |
   | ------------------------- | ------- | ---------------------------------------------------------------------- |
   | socket_io_client          | 2.0.3+1 | [pub.dev](https://pub.dev/packages/socket_io_client)                   |
-  | pusher_client_fixed       | 0.0.4   | [pub.dev](https://pub.dev/packages/pusher_client_fixed)                |
+  | pusher_client_socket      | 0.0.1+1 | [pub.dev](https://pub.dev/packages/pusher_client_socket)               |
   | fixed-laravel-echo-server | 0.1.3   | [npm](https://www.npmjs.com/package/@abdopr/fixed-laravel-echo-server) |
 
   To include these packages in your project, add the following dependencies to your `pubspec.yaml` file:
@@ -17,7 +17,7 @@
   ```yaml
   dependencies:
     socket_io_client: ^2.0.3+1
-    pusher_client_fixed: ^0.0.4
+    pusher_client_socket: ^0.0.1
   ```
 
   Please note that the `laravel_echo_null` package requires the `socket_io_client` package at version 2.0.2. Additionally, to ensure compatibility with the package, use the `fixed-laravel-echo-server` version 0.0.1, which is available on npm. You can install it globally by running the following command:
@@ -57,7 +57,7 @@
   ));
 
   ///// Pusher ////
-  import 'package:pusher_client_fixed/pusher_client_fixed.dart' as PUSHER;
+  import 'package:pusher_client_socket/pusher_client_socket.dart' as PUSHER;
 
   Echo<PUSHER.PusherClient, PusherChannel> echo = Echo<PUSHER.PusherClient, PusherChannel>(PusherConnector(
     'PUSHER_APP_KEY',
@@ -68,7 +68,6 @@
       'Accept': 'application/json',
     },
     cluster: 'PUSHER_CLUSTER', // String?: pusher cluster
-    host: 'ws.pusherapp.com',
     wsPort: 80,
     wssPort: 443,
     encrypted: true,
@@ -76,6 +75,26 @@
     pongTimeout: 30000,
     maxReconnectionAttempts: 6,
     maxReconnectGapInSeconds: 30,
+    enableLogging: true,
+    autoConnect: false, // bool: client connection automatically
+    nameSpace: 'nameSpace',
+  ));
+
+  ///// Pusher With Laravel/Reverb  ////
+  import 'package:pusher_client_socket/pusher_client_socket.dart' as PUSHER;
+
+  Echo<PUSHER.PusherClient, PusherChannel> echo = Echo<PUSHER.PusherClient, PusherChannel>(PusherConnector(
+    'PUSHER_APP_KEY',
+    authEndPoint: 'http://localhost/broadcasting/auth', // String?: auth host
+    authHeaders: { // authenticate headers
+      'Authorization': 'Bearer $token',
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+    },
+    protocol: PUSHER.Protocol.ws,
+    host: 'localhost:6001',
+    activityTimeout: 120000,
+    pongTimeout: 30000,
     enableLogging: true,
     autoConnect: false, // bool: client connection automatically
     nameSpace: 'nameSpace',
@@ -101,7 +120,7 @@
   );
 
   ///// Pusher ////
-  import 'package:pusher_client_fixed/pusher_client_fixed.dart';
+  import 'package:pusher_client_socket/pusher_client_socket.dart';
 
   Echo<PUSHER.PusherClient, PusherChannel> echo = Echo.pusher(
     'PUSHER_APP_KEY',
@@ -112,7 +131,6 @@
       'Accept': 'application/json',
     },
     cluster: 'PUSHER_CLUSTER', // String?: pusher cluster
-    host: 'ws.pusherapp.com',
     wsPort: 80,
     wssPort: 443
     encrypted: true,

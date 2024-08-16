@@ -1,6 +1,8 @@
 library laravel_echo_null;
 
 // Imports
+import 'dart:typed_data';
+
 import 'src/channel/channel.dart';
 import 'src/channel/presence_channel.dart';
 import 'src/channel/private_channel.dart';
@@ -12,7 +14,7 @@ import 'src/connector/socketio_connector.dart';
 
 // Clients
 import 'package:socket_io_client/socket_io_client.dart' as IO;
-import 'package:pusher_client_fixed/pusher_client_fixed.dart' as PUSHER;
+import 'package:pusher_client_socket/pusher_client_socket.dart' as PUSHER;
 
 // Exports
 export 'src/connector/connector.dart';
@@ -102,7 +104,10 @@ class Echo<ClientType, ChannelType> {
       'Content-Type': 'application/json'
     },
     String? cluster,
-    String host = "ws.pusherapp.com",
+    PUSHER.Protocol protocol = PUSHER.Protocol.ws,
+    Map<String, dynamic> Function(Uint8List, Map<String, dynamic>)?
+        channelDecryption,
+    String? host,
     int wsPort = 80,
     int wssPort = 443,
     bool encrypted = true,
@@ -120,7 +125,9 @@ class Echo<ClientType, ChannelType> {
           authEndPoint: authEndPoint,
           authHeaders: authHeaders,
           cluster: cluster,
+          protocol: protocol,
           host: host,
+          channelDecryption: channelDecryption,
           wsPort: wsPort,
           encrypted: encrypted,
           activityTimeout: activityTimeout,

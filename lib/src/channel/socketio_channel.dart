@@ -43,24 +43,18 @@ class SocketIoChannel extends Channel {
 
   /// Listen for an event on the channel instance.
   @override
-  SocketIoChannel listen(String event, Function callback) {
-    on(EventFormatter.format(event, options.nameSpace), callback);
-    return this;
-  }
+  SocketIoChannel listen(String event, Function callback) =>
+      on(EventFormatter.format(event, options.nameSpace), callback);
 
   /// Stop listening for an event on the channel instance.
   @override
-  SocketIoChannel stopListening(String event, [Function? callback]) {
-    _unbindEvent(EventFormatter.format(event, options.nameSpace), callback);
-    return this;
-  }
+  SocketIoChannel stopListening(String event, [Function? callback]) => this
+    .._unbindEvent(EventFormatter.format(event, options.nameSpace), callback);
 
   /// Register a callback to be called anytime a subscription succeeds.
   @override
-  SocketIoChannel subscribed(Function callback) {
-    on('connect', (socket) => callback(socket));
-    return this;
-  }
+  SocketIoChannel subscribed(Function callback) =>
+      on('connect', (socket) => callback(socket));
 
   /// Register a callback to be called anytime an error occurs.
   @override

@@ -1,4 +1,4 @@
-import 'package:pusher_client_fixed/pusher_client_fixed.dart' as PUSHER;
+import 'package:pusher_client_socket/pusher_client_socket.dart' as PUSHER;
 
 import 'event_formatter.dart';
 import 'channel.dart';
@@ -6,7 +6,7 @@ import 'channel.dart';
 ///
 /// This class represents a pusher channel.
 ///
-class PusherChannel extends Channel {
+class PusherChannel<PChannelT extends PUSHER.Channel> extends Channel {
   /// The Pusher client instance.
   final PUSHER.PusherClient pusher;
 
@@ -14,7 +14,7 @@ class PusherChannel extends Channel {
   final String name;
 
   /// The subscription of the channel.
-  late PUSHER.Channel subscription;
+  late PChannelT subscription;
 
   /// Create a new class instance.
   PusherChannel(this.pusher, this.name, super.options) {
@@ -36,24 +36,19 @@ class PusherChannel extends Channel {
 
   /// Stop listening for an event on the channel instance.
   @override
-  PusherChannel stopListening(String event, [Function? callback]) {
-    subscription.unbind(EventFormatter.format(event, options.nameSpace));
-    return this;
-  }
+  PusherChannel stopListening(String event, [Function? callback]) => this
+    ..subscription.unbind(EventFormatter.format(event, options.nameSpace));
 
   /// Register a callback to be called anytime a subscription succeeds.
   @override
-  PusherChannel subscribed(Function callback) =>
-      on('pusher:subscription_succeeded', () => callback());
+  PusherChannel subscribed(Function callback) => this
+    ..subscription.onSubscriptionSuccess((event) => callback(event?.data));
 
   /// Register a callback to be called anytime a subscription error occurs.
   @override
-  PusherChannel error(Function callback) =>
-      on('pusher:subscription_error', (status) => callback(status));
+  PusherChannel error(Function callback) => this;
 
   /// Bind a channel to an event.
-  PusherChannel on(String event, Function callback) {
-    subscription.bind(event, (event) => callback(event?.data));
-    return this;
-  }
+  PusherChannel on(String event, Function callback) =>
+      this..subscription.bind(event, (event) => callback(event?.data));
 }

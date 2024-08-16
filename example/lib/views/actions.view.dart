@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:laravel_echo_null/laravel_echo_null.dart';
-import 'package:pusher_client_fixed/pusher_client_fixed.dart' as PUSHER;
+import 'package:pusher_client_socket/pusher_client_socket.dart' as PUSHER;
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 
 import '../echo/pusher.dart';
@@ -43,9 +43,9 @@ class _ActionsViewState extends State<ActionsView> {
 
       (echo!.connector.client as PUSHER.PusherClient)
           .onConnectionStateChange((state) {
-        widget.log('pusher ${state!.currentState}');
+        widget.log('pusher $state');
 
-        if (state.currentState == 'connected') {
+        if (state is PUSHER.Connected) {
           setState(() => isConnected = true);
         } else {
           setState(() => isConnected = false);
@@ -110,20 +110,20 @@ class _ActionsViewState extends State<ActionsView> {
       /**
        * Handle pusher event
        */
-      if (e is PUSHER.PusherEvent) {
-        String text = 'channel: ${e.channelName}, event: ${e.eventName}';
+      // if (e is PUSHER.PusherEvent) {
+      //   String text = 'channel: ${e.channelName}, event: ${e.eventName}';
 
-        if (e.data != null) {
-          text += ', data: ${e.data}';
-        }
+      //   if (e.data != null) {
+      //     text += ', data: ${e.data}';
+      //   }
 
-        if (e.userId != null) {
-          text += ', userId: ${e.userId}';
-        }
+      //   if (e.userId != null) {
+      //     text += ', userId: ${e.userId}';
+      //   }
 
-        widget.log(text);
-        return;
-      }
+      //   widget.log(text);
+      //   return;
+      // }
 
       widget.log('event: $e');
     });

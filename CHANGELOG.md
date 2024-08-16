@@ -74,3 +74,9 @@
 ## 0.0.6 - May 13, 2024
 
 - Upgrade flutter sdk and dependencies.
+
+
+## 0.0.7 - Aug 16, 2024
+
+- Replace `pusher_client_fixed` package with `pusher_client_socket`.
+- Support all platforms [Android, IOS, MacOs, Windows, Linux].
