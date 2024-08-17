@@ -1,18 +1,18 @@
 import 'dart:typed_data';
 
-import 'package:pusher_client_socket/pusher_client_socket.dart';
+import 'package:pusher_client_socket/pusher_client_socket.dart' as PUSHER;
 
-import '../channel/pusher_channel.dart';
-import '../channel/pusher_encrypted_private_channel.dart';
-import '../channel/pusher_presence_channel.dart';
-import '../channel/pusher_private_channel.dart';
+import '../channels/pusher/pusher_channel.dart';
+import '../channels/pusher/pusher_private_encrypted_channel.dart';
+import '../channels/pusher/pusher_presence_channel.dart';
+import '../channels/pusher/pusher_private_channel.dart';
 import 'connector.dart';
 
-class PusherConnector extends Connector<PusherClient, PusherChannel> {
-  PusherClient get pusher => options.client;
+class PusherConnector extends Connector<PUSHER.PusherClient, PusherChannel> {
+  PUSHER.PusherClient get pusher => options.client;
 
   @override
-  PusherClient get client => pusher;
+  PUSHER.PusherClient get client => pusher;
 
   PusherConnector(
     String key, {
@@ -36,10 +36,10 @@ class PusherConnector extends Connector<PusherClient, PusherChannel> {
     String? nameSpace,
   }) : super(
           ConnectorOptions(
-            client: PusherClient(
-              options: PusherOptions(
+            client: PUSHER.PusherClient(
+              options: PUSHER.PusherOptions(
                 key: key,
-                authOptions: PusherAuthOptions(
+                authOptions: PUSHER.PusherAuthOptions(
                   authEndPoint,
                   headers: authHeaders,
                 ),
@@ -63,14 +63,26 @@ class PusherConnector extends Connector<PusherClient, PusherChannel> {
 
   /// Listen for an event on a channel instance.
   @override
-  PusherChannel listen(String name, String event, Function callback) =>
+  void listen(String name, String event, Function callback) =>
       channel(name).listen(event, callback);
 
   /// Get a channel instance by name.
   @override
   PusherChannel channel(String name) {
     if (channels[name] == null) {
-      channels[name] = PusherChannel(pusher, name, options);
+      if (name.startsWith('private-encrypted-')) {
+        channels[name] = PusherPrivateEncryptedChannel(
+          pusher,
+          name,
+          options,
+        );
+      } else if (name.startsWith('private-')) {
+        channels[name] = PusherPrivateChannel(pusher, name, options);
+      } else if (name.startsWith('presence-')) {
+        channels[name] = PusherPresenceChannel(pusher, name, options);
+      } else {
+        channels[name] = PusherChannel(pusher, name, options);
+      }
     }
     return channels[name] as PusherChannel;
   }
@@ -78,40 +90,31 @@ class PusherConnector extends Connector<PusherClient, PusherChannel> {
   /// Get a private channel instance by name.
   @override
   PusherPrivateChannel privateChannel(String name) {
-    if (channels['private-$name'] == null) {
-      channels['private-$name'] = PusherPrivateChannel(
-        pusher,
-        'private-$name',
-        options,
-      );
+    if (!name.startsWith("private-")) {
+      name = "private-$name";
     }
-    return channels['private-$name'] as PusherPrivateChannel;
+
+    return channel(name) as PusherPrivateChannel;
   }
 
   /// Get a private encrypted channel instance by name.
   @override
-  PusherEncryptedPrivateChannel encryptedPrivateChannel(String name) {
-    if (channels['private-encrypted-$name'] == null) {
-      channels['private-encrypted-$name'] = PusherEncryptedPrivateChannel(
-        pusher,
-        'private-encrypted-$name',
-        options,
-      );
+  PusherPrivateEncryptedChannel privateEncryptedChannel(String name) {
+    if (!name.startsWith("private-encrypted-")) {
+      name = "private-encrypted-$name";
     }
-    return channels['private-encrypted-$name'] as PusherEncryptedPrivateChannel;
+
+    return channel(name) as PusherPrivateEncryptedChannel;
   }
 
   /// Get a presence channel instance by name.
   @override
   PusherPresenceChannel presenceChannel(String name) {
-    if (channels['presence-$name'] == null) {
-      channels['presence-$name'] = PusherPresenceChannel(
-        pusher,
-        'presence-$name',
-        options,
-      );
+    if (!name.startsWith("presence-")) {
+      name = "presence-$name";
     }
-    return channels['presence-$name'] as PusherPresenceChannel;
+
+    return channel(name) as PusherPresenceChannel;
   }
 
   /// Leave the given channel, as well as its private and presence variants.

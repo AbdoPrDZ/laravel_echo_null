@@ -94,14 +94,22 @@ class _ActionsViewState extends State<ActionsView> {
       (channel as PrivateChannel).onSubscribedSuccess((data) {
         widget.log('channel subscribed data: $data');
       });
-    } else if (type == ChannelType.presence) {
-      channel = echo!.join(name).here((users) {
-        widget.log(users);
-      }).joining((user) {
-        widget.log(user);
-      }).leaving((user) {
-        widget.log(user);
+    } else if (type == ChannelType.privateEncrypted) {
+      channel = echo!.privateEncrypted(name);
+      (channel as PrivateChannel).onSubscribedSuccess((data) {
+        widget.log('channel subscribed data: $data');
       });
+    } else if (type == ChannelType.presence) {
+      channel = echo!.join(name)
+        ..here((users) {
+          widget.log(users);
+        })
+        ..joining((user) {
+          widget.log(user);
+        })
+        ..leaving((user) {
+          widget.log(user);
+        });
     }
 
     channel?.listen(event, (e) {

@@ -7,11 +7,11 @@ abstract class PresenceChannel extends Channel {
   const PresenceChannel(super.options);
 
   /// Register a callback to be called anytime the member list changes.
-  PresenceChannel here(Function callback);
+  void here(Function callback);
 
   /// Listen for someone joining the channel.
-  PresenceChannel joining(Function callback);
+  void joining(Function callback);
 
   /// Listen for someone leaving the channel.
-  PresenceChannel leaving(Function callback);
+  void leaving(Function callback);
 }
