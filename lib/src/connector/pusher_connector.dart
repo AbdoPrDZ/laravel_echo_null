@@ -17,11 +17,10 @@ class PusherConnector extends Connector<PusherClient, PusherChannel> {
   PusherConnector(
     String key, {
     required String authEndPoint,
+    String? cluster,
     Map<String, String> authHeaders = const {
       'Content-Type': 'application/json'
     },
-    String? cluster,
-    Protocol protocol = Protocol.ws,
     String? host,
     Map<String, dynamic> Function(Uint8List, Map<String, dynamic>)?
         channelDecryption,
@@ -31,7 +30,7 @@ class PusherConnector extends Connector<PusherClient, PusherChannel> {
     int activityTimeout = 120000,
     int pongTimeout = 30000,
     int maxReconnectionAttempts = 6,
-    int maxReconnectGapInSeconds = 30,
+    Duration reconnectGap = const Duration(seconds: 2),
     bool enableLogging = true,
     bool autoConnect = true,
     String? nameSpace,
@@ -45,16 +44,15 @@ class PusherConnector extends Connector<PusherClient, PusherChannel> {
                   headers: authHeaders,
                 ),
                 cluster: cluster,
-                protocol: protocol,
                 channelDecryption: channelDecryption,
                 host: host,
-                // wsPort: wsPort,
-                // wssPort: wssPort,
-                // encrypted: encrypted,
+                wsPort: wsPort,
+                wssPort: wssPort,
+                encrypted: encrypted,
                 activityTimeout: activityTimeout,
                 pongTimeout: pongTimeout,
-                // maxReconnectionAttempts: maxReconnectionAttempts,
-                // maxReconnectGapInSeconds: maxReconnectGapInSeconds,
+                maxReconnectionAttempts: maxReconnectionAttempts,
+                reconnectGap: reconnectGap,
                 enableLogging: enableLogging,
                 autoConnect: autoConnect,
               ),

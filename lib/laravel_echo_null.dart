@@ -99,12 +99,11 @@ class Echo<ClientType, ChannelType> {
   /// Init Echo with Pusher client
   static Echo<PUSHER.PusherClient, PusherChannel> pusher(
     String appKey, {
+    String? cluster,
     required String authEndPoint,
     Map<String, String> authHeaders = const {
       'Content-Type': 'application/json'
     },
-    String? cluster,
-    PUSHER.Protocol protocol = PUSHER.Protocol.ws,
     Map<String, dynamic> Function(Uint8List, Map<String, dynamic>)?
         channelDecryption,
     String? host,
@@ -114,7 +113,7 @@ class Echo<ClientType, ChannelType> {
     int activityTimeout = 120000,
     int pongTimeout = 30000,
     int maxReconnectionAttempts = 6,
-    int maxReconnectGapInSeconds = 30,
+    Duration reconnectGap = const Duration(seconds: 2),
     bool enableLogging = true,
     bool autoConnect = true,
     String? nameSpace,
@@ -125,7 +124,6 @@ class Echo<ClientType, ChannelType> {
           authEndPoint: authEndPoint,
           authHeaders: authHeaders,
           cluster: cluster,
-          protocol: protocol,
           host: host,
           channelDecryption: channelDecryption,
           wsPort: wsPort,
@@ -133,7 +131,7 @@ class Echo<ClientType, ChannelType> {
           activityTimeout: activityTimeout,
           pongTimeout: pongTimeout,
           maxReconnectionAttempts: maxReconnectionAttempts,
-          maxReconnectGapInSeconds: maxReconnectGapInSeconds,
+          reconnectGap: reconnectGap,
           enableLogging: enableLogging,
           autoConnect: autoConnect,
           nameSpace: nameSpace,

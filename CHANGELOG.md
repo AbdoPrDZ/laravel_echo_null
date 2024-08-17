@@ -80,3 +80,7 @@
 
 - Replace `pusher_client_fixed` package with `pusher_client_socket`.
 - Support all platforms [Android, IOS, MacOs, Windows, Linux].
+
+## 0.0.7+1 - Aug 17, 2024
+
+- Upgrade `pusher_client_socket` to ^0.0.2.
