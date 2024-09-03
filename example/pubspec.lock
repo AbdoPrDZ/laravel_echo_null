@@ -113,7 +113,7 @@ packages:
       path: ".."
       relative: true
     source: path
-    version: "0.0.8"
+    version: "0.0.1"
   leak_tracker:
     dependency: transitive
     description:
@@ -198,10 +198,10 @@ packages:
     dependency: "direct main"
     description:
       name: pusher_client_socket
-      sha256: fd47faff9f828d0d1864f89e85e9a67e4b66696d83c17ed67f709dd63fc106bf
+      sha256: "6926cccc379228d14f0083c11cf9137e9d1d7013570af5b752f30fe8bf1c4580"
       url: "https://pub.dev"
     source: hosted
-    version: "0.0.2"
+    version: "0.0.2+1"
   sky_engine:
     dependency: transitive
     description: flutter
@@ -291,10 +291,10 @@ packages:
     dependency: transitive
     description:
       name: vm_service
-      sha256: f652077d0bdf60abe4c1f6377448e8655008eef28f128bc023f7b5e8dfeb48fc
+      sha256: "5c5f338a667b4c644744b661f309fb8080bb94b18a7e91ef1dbd343bed00ed6d"
       url: "https://pub.dev"
     source: hosted
-    version: "14.2.4"
+    version: "14.2.5"
   web:
     dependency: transitive
     description:
@@ -328,5 +328,5 @@ packages:
     source: hosted
     version: "0.1.4"
 sdks:
-  dart: ">=3.5.0 <4.0.0"
+  dart: ">=3.5.1 <4.0.0"
   flutter: ">=3.18.0-18.0.pre.54"

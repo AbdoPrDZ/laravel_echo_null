@@ -92,3 +92,7 @@
     **Note:** you need use a custom broadcaster for this feature see [EncryptedRedisBroadcaster](https://gist.github.com/AbdoPrDZ/415fcaf6568cef762e2b3eeb019c16bd) gist.
 
 - Fixed some issues that were occurring.
+
+## 0.0.8+1 - Sep 03, 2024
+
+- Upgrade flutter sdk.
