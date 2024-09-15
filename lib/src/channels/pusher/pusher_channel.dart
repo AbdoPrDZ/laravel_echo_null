@@ -50,5 +50,5 @@ class PusherChannel<PChannelT extends PUSHER.Channel> extends Channel {
 
   /// Bind a channel to an event.
   void on(String event, Function callback) =>
-      subscription.bind(event, (event) => callback(event?.data));
+      subscription.bind(event, callback);
 }
