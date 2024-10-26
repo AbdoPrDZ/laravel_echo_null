@@ -96,3 +96,9 @@
 ## 0.0.8+1 - Sep 03, 2024
 
 - Upgrade flutter sdk.
+
+
+## 0.0.8+2 - Oct 26, 2024
+
+- Upgrade flutter sdk.
+- Upgrade some packages versions.
