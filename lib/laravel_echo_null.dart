@@ -3,11 +3,12 @@ library laravel_echo_null;
 // Imports
 import 'dart:typed_data';
 
-import 'src/channel/channel.dart';
-import 'src/channel/presence_channel.dart';
-import 'src/channel/private_channel.dart';
-import 'src/channel/pusher_channel.dart';
-import 'src/channel/socketio_channel.dart';
+import 'src/channels/channel.dart';
+import 'src/channels/presence_channel.dart';
+import 'src/channels/private_channel.dart';
+import 'src/channels/private_encrypted_channel.dart';
+import 'src/channels/pusher/pusher_channel.dart';
+import 'src/channels/socketio/socketio_channel.dart';
 import 'src/connector/connector.dart';
 import 'src/connector/pusher_connector.dart';
 import 'src/connector/socketio_connector.dart';
@@ -20,13 +21,21 @@ import 'package:pusher_client_socket/pusher_client_socket.dart' as PUSHER;
 export 'src/connector/connector.dart';
 export 'src/connector/pusher_connector.dart';
 export 'src/connector/socketio_connector.dart';
-export 'src/channel/channel.dart';
-export 'src/channel/private_channel.dart';
-export 'src/channel/socketio_private_channel.dart';
-export 'src/channel/presence_channel.dart';
-export 'src/channel/pusher_presence_channel.dart';
-export 'src/channel/socketio_channel.dart';
-export 'src/channel/pusher_channel.dart';
+
+export 'src/channels/channel.dart';
+export 'src/channels/presence_channel.dart';
+export 'src/channels/private_channel.dart';
+export 'src/channels/private_encrypted_channel.dart';
+
+export 'src/channels/socketio/socketio_channel.dart';
+export 'src/channels/socketio/socketio_presence_channel.dart';
+export 'src/channels/socketio/socketio_private_channel.dart';
+export 'src/channels/socketio/socketio_private_encrypted_channel.dart';
+
+export 'src/channels/pusher/pusher_channel.dart';
+export 'src/channels/pusher/pusher_presence_channel.dart';
+export 'src/channels/pusher/pusher_private_channel.dart';
+export 'src/channels/pusher/pusher_private_encrypted_channel.dart';
 
 ///
 /// This class is the primary API for interacting with broadcasting.
@@ -39,9 +48,7 @@ class Echo<ClientType, ChannelType> {
   Echo(this.connector);
 
   /// Get a channel instance by name.
-  Channel channel(String channel) {
-    return connector.channel(channel);
-  }
+  Channel channel(String channel) => connector.channel(channel);
 
   /// Get a presence channel instance by name.
   PresenceChannel join(String channel) {
@@ -49,7 +56,7 @@ class Echo<ClientType, ChannelType> {
   }
 
   /// Listen for an event on a channel instance.
-  Channel listen(String channel, String event, Function callback) =>
+  void listen(String channel, String event, Function callback) =>
       connector.listen(channel, event, callback);
 
   /// Get a private channel instance by name.
@@ -60,8 +67,8 @@ class Echo<ClientType, ChannelType> {
       connector.presenceChannel(channel);
 
   /// Get a private encrypted channel instance by name.
-  Channel? encryptedPrivate(String channel) =>
-      connector.encryptedPrivateChannel(channel);
+  PrivateEncryptedChannel privateEncrypted(String channel) =>
+      connector.privateEncryptedChannel(channel);
 
   /// Leave the given channel, as well as its private and presence variants.
   void leave(String channel) => connector.leave(channel);
@@ -87,6 +94,7 @@ class Echo<ClientType, ChannelType> {
       'Content-Type': 'application/json'
     },
     Map moreOptions = const {},
+    Map<String, dynamic> Function(String, Map)? channelDecryption,
   }) =>
       Echo<IO.Socket, SocketIoChannel>(SocketIoConnector(
         host,
@@ -94,6 +102,7 @@ class Echo<ClientType, ChannelType> {
         autoConnect: autoConnect,
         authHeaders: authHeaders,
         moreOptions: moreOptions,
+        channelDecryption: channelDecryption,
       ));
 
   /// Init Echo with Pusher client

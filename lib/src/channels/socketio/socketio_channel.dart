@@ -1,7 +1,8 @@
 import 'package:socket_io_client/socket_io_client.dart';
 
-import 'event_formatter.dart';
-import 'channel.dart';
+import '../../connector/connector.dart';
+import '../event_formatter.dart';
+import '../channel.dart';
 
 ///
 /// This class represents a Socket.io channel.
@@ -14,7 +15,11 @@ class SocketIoChannel extends Channel {
   final String name;
 
   /// Create a new class instance.
-  SocketIoChannel(this.socket, this.name, super.options) {
+  SocketIoChannel(
+    this.socket,
+    this.name,
+    SocketIoConnectorOptions options,
+  ) : super(options) {
     subscribe();
   }
 
@@ -43,25 +48,25 @@ class SocketIoChannel extends Channel {
 
   /// Listen for an event on the channel instance.
   @override
-  SocketIoChannel listen(String event, Function callback) =>
+  void listen(String event, Function callback) =>
       on(EventFormatter.format(event, options.nameSpace), callback);
 
   /// Stop listening for an event on the channel instance.
   @override
-  SocketIoChannel stopListening(String event, [Function? callback]) => this
-    .._unbindEvent(EventFormatter.format(event, options.nameSpace), callback);
+  void stopListening(String event, [Function? callback]) =>
+      _unbindEvent(EventFormatter.format(event, options.nameSpace), callback);
 
   /// Register a callback to be called anytime a subscription succeeds.
   @override
-  SocketIoChannel subscribed(Function callback) =>
+  void subscribed(Function callback) =>
       on('connect', (socket) => callback(socket));
 
   /// Register a callback to be called anytime an error occurs.
   @override
-  SocketIoChannel error(Function callback) => this;
+  void error(Function callback) => this;
 
   /// Bind the channel's socket to an event and store the callback.
-  SocketIoChannel on(String event, Function callback) {
+  void on(String event, Function callback) {
     listeners[event] = listeners[event] ?? [];
 
     if (events[event] == null) {
@@ -79,8 +84,6 @@ class SocketIoChannel extends Channel {
     }
 
     listeners[event]?.add(callback);
-
-    return this;
   }
 
   /// Unbind the channel's socket from all stored event callbacks.

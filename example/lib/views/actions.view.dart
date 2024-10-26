@@ -55,7 +55,7 @@ class _ActionsViewState extends State<ActionsView> {
       widget.log('initializing socket.io');
       echo = initSocketIOClient();
       widget.log('socket.io initialized successfully');
-      print((echo?.connector.client as IO.Socket?)?.opts);
+      print((echo?.connector.client as IO.Socket?)?.io.options);
 
       echo!.connector.onConnect((_) {
         widget.log('socket.io connected');
@@ -94,14 +94,22 @@ class _ActionsViewState extends State<ActionsView> {
       (channel as PrivateChannel).onSubscribedSuccess((data) {
         widget.log('channel subscribed data: $data');
       });
-    } else if (type == ChannelType.presence) {
-      channel = echo!.join(name).here((users) {
-        widget.log(users);
-      }).joining((user) {
-        widget.log(user);
-      }).leaving((user) {
-        widget.log(user);
+    } else if (type == ChannelType.privateEncrypted) {
+      channel = echo!.privateEncrypted(name);
+      (channel as PrivateChannel).onSubscribedSuccess((data) {
+        widget.log('channel subscribed data: $data');
       });
+    } else if (type == ChannelType.presence) {
+      channel = echo!.join(name)
+        ..here((users) {
+          widget.log(users);
+        })
+        ..joining((user) {
+          widget.log(user);
+        })
+        ..leaving((user) {
+          widget.log(user);
+        });
     }
 
     channel?.listen(event, (e) {

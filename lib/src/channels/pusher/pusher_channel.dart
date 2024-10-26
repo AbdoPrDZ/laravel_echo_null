@@ -1,7 +1,7 @@
 import 'package:pusher_client_socket/pusher_client_socket.dart' as PUSHER;
 
-import 'event_formatter.dart';
-import 'channel.dart';
+import '../channel.dart';
+import '../event_formatter.dart';
 
 ///
 /// This class represents a pusher channel.
@@ -31,24 +31,24 @@ class PusherChannel<PChannelT extends PUSHER.Channel> extends Channel {
 
   /// Listen for an event on the channel instance.
   @override
-  PusherChannel listen(String event, Function callback) =>
+  void listen(String event, Function callback) =>
       on(EventFormatter.format(event, options.nameSpace), callback);
 
   /// Stop listening for an event on the channel instance.
   @override
-  PusherChannel stopListening(String event, [Function? callback]) => this
-    ..subscription.unbind(EventFormatter.format(event, options.nameSpace));
+  void stopListening(String event, [Function? callback]) =>
+      subscription.unbind(EventFormatter.format(event, options.nameSpace));
 
   /// Register a callback to be called anytime a subscription succeeds.
   @override
-  PusherChannel subscribed(Function callback) => this
-    ..subscription.onSubscriptionSuccess((event) => callback(event?.data));
+  void subscribed(Function callback) =>
+      subscription.onSubscriptionSuccess((event) => callback(event?.data));
 
   /// Register a callback to be called anytime a subscription error occurs.
   @override
-  PusherChannel error(Function callback) => this;
+  void error(Function callback) {}
 
   /// Bind a channel to an event.
-  PusherChannel on(String event, Function callback) =>
-      this..subscription.bind(event, (event) => callback(event?.data));
+  void on(String event, Function callback) =>
+      subscription.bind(event, (event) => callback(event?.data));
 }

@@ -1,6 +1,6 @@
 import 'package:pusher_client_socket/pusher_client_socket.dart' as PUSHER;
 
-import 'private_channel.dart';
+import '../private_channel.dart';
 import 'pusher_channel.dart';
 
 ///
@@ -16,11 +16,11 @@ class PusherPrivateChannel extends PusherChannel<PUSHER.PrivateChannel>
 
   /// Trigger client event on the channel.
   @override
-  PusherPrivateChannel whisper(String eventName, dynamic data) =>
-      this..subscription.trigger('client-$eventName', data);
+  void whisper(String eventName, dynamic data) =>
+      subscription.trigger('client-$eventName', data);
 
   /// listen to on subscribe success event
   @override
-  PusherChannel onSubscribedSuccess(Function callback) =>
+  void onSubscribedSuccess(Function callback) =>
       listen('pusher:subscription_succeeded', callback);
 }

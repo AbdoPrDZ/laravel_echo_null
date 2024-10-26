@@ -9,15 +9,15 @@ class ChannelOptions {
   ChannelOptions(this.channelName, this.channelType, this.event);
 }
 
-enum ChannelType { public, private, presence }
+enum ChannelType { public, private, privateEncrypted, presence }
 
 class ListenToChannelView extends StatefulWidget {
   final ValueChanged<ChannelOptions> onListen;
 
   const ListenToChannelView({
-    Key? key,
+    super.key,
     required this.onListen,
-  }) : super(key: key);
+  });
 
   @override
   createState() => _ListenToChannelViewState();
@@ -39,6 +39,10 @@ class _ListenToChannelViewState extends State<ListenToChannelView> {
       case ChannelType.private:
         channelName = 'private-channel.1';
         event = 'PrivateEvent';
+        break;
+      case ChannelType.privateEncrypted:
+        channelName = 'private-encrypted-channel.1';
+        event = 'PrivateEncryptedEvent';
         break;
       case ChannelType.presence:
         channelName = 'presence-channel.1';
@@ -72,6 +76,7 @@ class _ListenToChannelViewState extends State<ListenToChannelView> {
               children: const {
                 ChannelType.public: Text('public'),
                 ChannelType.private: Text('private'),
+                ChannelType.privateEncrypted: Text('encrypted'),
                 ChannelType.presence: Text('presence'),
               },
             ),
@@ -120,6 +125,12 @@ class _ListenToChannelViewState extends State<ListenToChannelView> {
                     case ChannelType.private:
                       if (channelName.startsWith('private-')) {
                         channelName = channelName.replaceFirst('private-', '');
+                      }
+                      break;
+                    case ChannelType.privateEncrypted:
+                      if (channelName.startsWith('private-encrypted-')) {
+                        channelName =
+                            channelName.replaceFirst('private-encrypted-', '');
                       }
                       break;
                     case ChannelType.presence:

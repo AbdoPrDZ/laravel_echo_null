@@ -81,6 +81,24 @@
 - Replace `pusher_client_fixed` package with `pusher_client_socket`.
 - Support all platforms [Android, IOS, MacOs, Windows, Linux].
 
-## 0.0.7+1 - Aug 17, 2024
+## 0.0.7+1 - Aug 18, 2024
 
 - Upgrade `pusher_client_socket` to ^0.0.2.
+
+## 0.0.8 - Aug 18, 2024
+
+- Add `private-encrypted-channel` feature to socket.io channels.
+
+    **Note:** you need use a custom broadcaster for this feature see [EncryptedRedisBroadcaster](https://gist.github.com/AbdoPrDZ/415fcaf6568cef762e2b3eeb019c16bd) gist.
+
+- Fixed some issues that were occurring.
+
+## 0.0.8+1 - Sep 03, 2024
+
+- Upgrade flutter sdk.
+
+
+## 0.0.8+2 - Oct 26, 2024
+
+- Upgrade flutter sdk.
+- Upgrade some packages versions.

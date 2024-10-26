@@ -1,8 +1,9 @@
 import 'package:socket_io_client/socket_io_client.dart';
 
-import '../channel/socketio_channel.dart';
-import '../channel/socketio_presence_channel.dart';
-import '../channel/socketio_private_channel.dart';
+import '../channels/socketio/socketio_channel.dart';
+import '../channels/socketio/socketio_private_encrypted_channel.dart';
+import '../channels/socketio/socketio_presence_channel.dart';
+import '../channels/socketio/socketio_private_channel.dart';
 import 'connector.dart';
 
 ///
@@ -22,26 +23,51 @@ class SocketIoConnector extends Connector<Socket, SocketIoChannel> {
     String? namespace,
     bool autoConnect = true,
     Map moreOptions = const {},
-  }) : super(ConnectorOptions(
-          client: io(host, {
-            'autoConnect': autoConnect,
-            ...moreOptions,
-            'auth': {'headers': authHeaders},
-          }),
-          authHeaders: authHeaders,
-          nameSpace: namespace,
-        ));
+    Map<String, dynamic> Function(String, Map)? channelDecryption,
+  }) : super(SocketIoConnectorOptions(
+            client: io(host, {
+              'autoConnect': autoConnect,
+              ...moreOptions,
+              'auth': {'headers': authHeaders},
+            }),
+            authHeaders: authHeaders,
+            nameSpace: namespace,
+            channelDecryption: channelDecryption));
 
   /// Listen for an event on a channel instance.
   @override
-  SocketIoChannel listen(String channel, String event, Function callback) =>
+  void listen(String channel, String event, Function callback) =>
       this.channel(channel).listen(event, callback);
 
   /// Get a channel instance by name.
   @override
   SocketIoChannel channel(String name) {
     if (channels[name] == null) {
-      channels[name] = SocketIoChannel(socket, name, options);
+      if (name.startsWith('private-encrypted-')) {
+        channels[name] = SocketIoPrivateEncryptedChannel(
+          socket,
+          name,
+          options as SocketIoConnectorOptions,
+        );
+      } else if (name.startsWith('private-')) {
+        channels[name] = SocketIoPrivateChannel(
+          socket,
+          name,
+          options as SocketIoConnectorOptions,
+        );
+      } else if (name.startsWith('presence-')) {
+        channels[name] = SocketIoChannel(
+          socket,
+          name,
+          options as SocketIoConnectorOptions,
+        );
+      } else {
+        channels[name] = SocketIoChannel(
+          socket,
+          name,
+          options as SocketIoConnectorOptions,
+        );
+      }
     }
 
     return channels[name] as SocketIoChannel;
@@ -50,29 +76,31 @@ class SocketIoConnector extends Connector<Socket, SocketIoChannel> {
   /// Get a private channel instance by name.
   @override
   SocketIoPrivateChannel privateChannel(String name) {
-    if (channels['private-$name'] == null) {
-      channels['private-$name'] = SocketIoPrivateChannel(
-        socket,
-        'private-$name',
-        options,
-      );
+    if (!name.startsWith("private-")) {
+      name = "private-$name";
     }
 
-    return channels['private-$name'] as SocketIoPrivateChannel;
+    return channel(name) as SocketIoPrivateChannel;
+  }
+
+  /// Get a private encrypted channel instance by name.
+  @override
+  SocketIoPrivateEncryptedChannel privateEncryptedChannel(String name) {
+    if (!name.startsWith("private-encrypted-")) {
+      name = "private-encrypted-$name";
+    }
+
+    return channel(name) as SocketIoPrivateEncryptedChannel;
   }
 
   /// Get a presence channel instance by name.
   @override
   SocketIoPresenceChannel presenceChannel(String name) {
-    if (channels['presence-$name'] == null) {
-      channels['presence-$name'] = SocketIoPresenceChannel(
-        socket,
-        'presence-$name',
-        options,
-      );
+    if (!name.startsWith("presence-")) {
+      name = "presence-$name";
     }
 
-    return channels['presence-$name'] as SocketIoPresenceChannel;
+    return channel(name) as SocketIoPresenceChannel;
   }
 
   /// Leave the given channel, as well as its private and presence variants.
@@ -126,14 +154,14 @@ class SocketIoConnector extends Connector<Socket, SocketIoChannel> {
       socket.onConnectError((data) => handler(data));
 
   /// listen to on connect timeout event
-  @override
-  void onConnectTimeout(Function(dynamic data) handler) =>
-      socket.onConnectTimeout((data) => handler(data));
+  // @override
+  // void onConnectTimeout(Function(dynamic data) handler) =>
+  //     socket.onConnectTimeout((data) => handler(data));
 
   /// listen to on connecting event
-  @override
-  void onConnecting(Function(dynamic data) handler) =>
-      socket.onConnecting((data) => handler(data));
+  // @override
+  // void onConnecting(Function(dynamic data) handler) =>
+  //     socket.onConnecting((data) => handler(data));
 
   /// listen to on disconnect event
   @override
@@ -166,7 +194,7 @@ class SocketIoConnector extends Connector<Socket, SocketIoChannel> {
       socket.onReconnectError((data) => handler(data));
 
   /// listen to on reconnecting event
-  @override
-  void onReconnecting(Function(dynamic data) handler) =>
-      socket.onReconnecting((data) => handler(data));
+  // @override
+  // void onReconnecting(Function(dynamic data) handler) =>
+  //     socket.onReconnecting((data) => handler(data));
 }
