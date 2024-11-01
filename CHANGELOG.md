@@ -119,3 +119,7 @@
 
 - Add missing events.
 - Add whisper function.
+
+## 0.0.8+7 - Nov 01, 2024
+
+- Upgrade `pusher_client_socket` package version.

@@ -13,7 +13,7 @@ dependencies:
   cupertino_icons: ^1.0.8
   laravel_echo_null:
     path: ../
-  pusher_client_socket: ^0.0.2+4
+  pusher_client_socket: ^0.0.2+5
   socket_io_client: ^3.0.0
 
 dev_dependencies:
