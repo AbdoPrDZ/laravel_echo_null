@@ -22,5 +22,10 @@ class PusherPrivateChannel extends PusherChannel<PUSHER.PrivateChannel>
   /// listen to on subscribe success event
   @override
   void onSubscribedSuccess(Function callback) =>
-      listen('pusher:subscription_succeeded', callback);
+      subscription.onSubscriptionSuccess(callback);
+
+  /// listen to on subscribe count event
+  @override
+  void onSubscribedCount(Function callback) =>
+      subscription.onSubscriptionCount(callback);
 }

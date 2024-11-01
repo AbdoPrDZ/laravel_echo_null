@@ -27,6 +27,15 @@ class PusherPresenceChannel extends PusherChannel<PUSHER.PresenceChannel>
   void leaving(Function callback) => on('pusher:member_removed', callback);
 
   /// Trigger client event on the channel.
+  @override
   void whisper(String eventName, dynamic data) =>
       subscription.trigger('client-$eventName', data);
+
+  @override
+  void onSubscribedSuccess(Function callback) =>
+      subscription.onSubscriptionSuccess(callback);
+
+  @override
+  void onSubscribedCount(Function callback) =>
+      subscription.onSubscriptionCount(callback);
 }

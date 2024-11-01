@@ -12,6 +12,12 @@ class SocketIoPresenceChannel extends SocketIoPrivateChannel
     super.options,
   );
 
+  @override
+  void onSubscribedCount(Function callback) =>
+      on('presence:subscribed', (List<dynamic> members) {
+        callback(members.length);
+      });
+
   /// Register a callback to be called anytime the member list changes.
   @override
   void here(Function callback) =>
