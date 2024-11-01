@@ -111,3 +111,7 @@
 ## 0.0.8+4 - Nov 01, 2024
 
 - Add missing events on pusher connector.
+
+## 0.0.8+5 - Nov 01, 2024
+
+- Fix onConnect event in pusher connector.

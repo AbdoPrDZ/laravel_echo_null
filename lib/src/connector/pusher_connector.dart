@@ -149,7 +149,8 @@ class PusherConnector extends Connector<PUSHER.PusherClient, PusherChannel> {
 
   /// Listen for the on connect event.
   @override
-  void onConnect(Function(dynamic data) handler) => pusher.onConnected(handler);
+  void onConnect(Function(dynamic data) handler) =>
+      pusher.onConnectionEstablished(handler);
 
   /// Listen for the on connect error event.
   @override
