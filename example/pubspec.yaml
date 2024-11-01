@@ -5,7 +5,7 @@ publish_to: 'none'
 version: 1.0.0+1
 
 environment:
-  sdk: ^3.5.3
+  sdk: ^3.5.4
 
 dependencies:
   flutter:
@@ -13,7 +13,7 @@ dependencies:
   cupertino_icons: ^1.0.8
   laravel_echo_null:
     path: ../
-  pusher_client_socket: ^0.0.2+3
+  pusher_client_socket: ^0.0.2+4
   socket_io_client: ^3.0.0
 
 dev_dependencies:

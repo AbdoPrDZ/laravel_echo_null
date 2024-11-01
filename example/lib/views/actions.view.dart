@@ -102,7 +102,7 @@ class _ActionsViewState extends State<ActionsView> {
     } else if (type == ChannelType.presence) {
       channel = echo!.join(name)
         ..here((users) {
-          widget.log(users);
+          widget.log("$users");
         })
         ..joining((user) {
           widget.log(user);

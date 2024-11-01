@@ -102,3 +102,8 @@
 
 - Upgrade flutter sdk.
 - Upgrade some packages versions.
+
+## 0.0.8+3 - Nov 01, 2024
+
+- Upgrade flutter sdk.
+- Fix error `Unhandled Exception: NoSuchMethodError: Class '_Map<String, dynamic>' has no instance getter 'data'.`.

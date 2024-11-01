@@ -13,10 +13,12 @@ Echo<PusherClient, PusherChannel> initPusherClient(
     Echo.pusher(
       key,
       host: host,
+      wsPort: wsPort,
       authEndPoint: hostAuthEndPoint,
       authHeaders: {'Authorization': 'Bearer $token'},
       enableLogging: true,
       autoConnect: false,
+      encrypted: false,
     )..connector.onConnectError(
         (error) => log('[Pusher Connection Error]: ${error?.message}'),
       );
