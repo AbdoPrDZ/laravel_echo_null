@@ -141,15 +141,43 @@ class PusherConnector extends Connector<PUSHER.PusherClient, PusherChannel> {
 
   /// Create a fresh Pusher connection.
   @override
-  void connect() {
-    pusher.connect();
-  }
+  void connect() => pusher.connect();
 
   /// Disconnect Pusher connection.
   @override
   void disconnect() => pusher.disconnect();
 
+  /// Listen for the on connect event.
+  @override
+  void onConnect(Function(dynamic data) handler) => pusher.onConnected(handler);
+
+  /// Listen for the on connect error event.
   @override
   void onConnectError(Function(dynamic data) handler) =>
       pusher.onConnectionError((data) => handler(data));
+
+  /// Listen for the on connect timeout event.
+  @override
+  void onConnecting(Function(dynamic data) handler) =>
+      pusher.onConnecting((data) => handler(data));
+
+  /// Listen for the on connect timeout event.
+  @override
+  void onDisconnect(Function(dynamic data) handler) =>
+      pusher.onDisconnected((data) => handler(data));
+
+  /// Listen for the on error event.
+  @override
+  void onError(Function(dynamic data) handler) =>
+      pusher.onError((data) => handler(data));
+
+  /// Listen for the on reconnect event.
+  @override
+  void onReconnect(Function(dynamic data) handler) =>
+      pusher.onReconnected((data) => handler(data));
+
+  /// Listen for the on reconnect attempt event.
+  @override
+  void onReconnecting(Function(dynamic data) handler) =>
+      pusher.onReconnecting((data) => handler(data));
 }

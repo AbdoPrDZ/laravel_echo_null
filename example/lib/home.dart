@@ -28,68 +28,66 @@ class _HomeState extends State<Home> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        title: CupertinoSegmentedControl(
-          children: const {
-            'pusher': Text(
-              'pusher',
-              style: TextStyle(fontSize: 14),
-            ),
-            'socket.io': Padding(
-              padding: EdgeInsets.symmetric(horizontal: 8),
-              child: Text(
-                'socket.io',
+  Widget build(BuildContext context) => Scaffold(
+        appBar: AppBar(
+          backgroundColor: Colors.white,
+          title: CupertinoSegmentedControl(
+            children: const {
+              'pusher': Text(
+                'pusher',
                 style: TextStyle(fontSize: 14),
               ),
-            ),
-          },
-          onValueChanged: (String value) {
-            setState(() => broadcaster = value);
-            log('switched to $value');
-          },
-          groupValue: broadcaster,
-        ),
-        actions: [
-          IconButton(
-            onPressed: () => setState(() => logs.clear()),
-            tooltip: 'Clear log',
-            icon: const Icon(
-              Icons.block,
-              color: Colors.grey,
-            ),
-          ),
-        ],
-        bottom: PreferredSize(
-          preferredSize: Size.zero,
-          child: Container(
-            decoration: BoxDecoration(
-              border: Border(
-                top: BorderSide(
-                  color: Colors.grey[300]!,
+              'socket.io': Padding(
+                padding: EdgeInsets.symmetric(horizontal: 8),
+                child: Text(
+                  'socket.io',
+                  style: TextStyle(fontSize: 14),
                 ),
               ),
-            ),
+            },
+            onValueChanged: (String value) {
+              setState(() => broadcaster = value);
+              log('switched to $value');
+            },
+            groupValue: broadcaster,
           ),
-        ),
-      ),
-      body: Column(
-        children: [
-          Flexible(child: LogView(logs)),
-          Flexible(
+          actions: [
+            IconButton(
+              onPressed: () => setState(() => logs.clear()),
+              tooltip: 'Clear log',
+              icon: const Icon(
+                Icons.block,
+                color: Colors.grey,
+              ),
+            ),
+          ],
+          bottom: PreferredSize(
+            preferredSize: Size.zero,
             child: Container(
               decoration: BoxDecoration(
                 border: Border(
-                  top: BorderSide(color: Colors.grey[300]!),
+                  top: BorderSide(
+                    color: Colors.grey[300]!,
+                  ),
                 ),
               ),
-              child: ActionsView(broadcaster: broadcaster, log: log),
             ),
           ),
-        ],
-      ),
-    );
-  }
+        ),
+        body: Column(
+          children: [
+            Flexible(child: LogView(logs)),
+            Flexible(
+              child: Container(
+                decoration: BoxDecoration(
+                  border: Border(
+                    top: BorderSide(color: Colors.grey[300]!),
+                  ),
+                ),
+                child: ActionsView(broadcaster: broadcaster, log: log),
+              ),
+            ),
+          ],
+        ),
+      );
 }

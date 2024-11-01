@@ -5,10 +5,10 @@ class LeaveChannelView extends StatefulWidget {
   final List<String> listeningChannels;
 
   const LeaveChannelView({
-    Key? key,
+    super.key,
     required this.onLeave,
     required this.listeningChannels,
-  }) : super(key: key);
+  });
 
   @override
   createState() => _LeaveChannelViewState();
@@ -20,11 +20,12 @@ class _LeaveChannelViewState extends State<LeaveChannelView> {
 
   @override
   void initState() {
-    super.initState();
     nameController = TextEditingController();
     if (widget.listeningChannels.isNotEmpty) {
       name = widget.listeningChannels.first;
     }
+
+    super.initState();
   }
 
   @override

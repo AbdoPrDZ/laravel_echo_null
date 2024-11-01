@@ -107,3 +107,7 @@
 
 - Upgrade flutter sdk.
 - Fix error `Unhandled Exception: NoSuchMethodError: Class '_Map<String, dynamic>' has no instance getter 'data'.`.
+
+## 0.0.8+4 - Nov 01, 2024
+
+- Add missing events on pusher connector.

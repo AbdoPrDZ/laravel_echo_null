@@ -55,7 +55,6 @@ class _ActionsViewState extends State<ActionsView> {
       widget.log('initializing socket.io');
       echo = initSocketIOClient();
       widget.log('socket.io initialized successfully');
-      print((echo?.connector.client as IO.Socket?)?.io.options);
 
       echo!.connector.onConnect((_) {
         widget.log('socket.io connected');
