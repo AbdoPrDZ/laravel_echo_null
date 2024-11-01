@@ -25,7 +25,6 @@ class PusherPrivateChannel extends PusherChannel<PUSHER.PrivateChannel>
       subscription.onSubscriptionSuccess(callback);
 
   /// listen to on subscribe count event
-  @override
   void onSubscribedCount(Function callback) =>
       subscription.onSubscriptionCount(callback);
 }
