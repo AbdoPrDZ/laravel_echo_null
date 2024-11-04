@@ -123,3 +123,7 @@
 ## 0.0.8+7 - Nov 01, 2024
 
 - Upgrade `pusher_client_socket` package version.
+
+## 0.0.8+8 - Nov 04, 204
+
+- Upgrade `pusher_client_socket` package version.
