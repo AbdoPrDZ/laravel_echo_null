@@ -124,6 +124,11 @@
 
 - Upgrade `pusher_client_socket` package version.
 
-## 0.0.8+8 - Nov 04, 204
+## 0.0.8+8 - Nov 04, 2024
 
+- Upgrade `pusher_client_socket` package version.
+
+## 0.0.9 - Jan 04, 2025
+
+- Upgrade flutter sdk.
 - Upgrade `pusher_client_socket` package version.
