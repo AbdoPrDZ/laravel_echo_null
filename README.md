@@ -9,7 +9,7 @@
   | Package                   | Version | URL Source                                                             |
   | ------------------------- | ------- | ---------------------------------------------------------------------- |
   | socket_io_client          | 3.0.2   | [pub.dev](https://pub.dev/packages/socket_io_client)                   |
-  | pusher_client_socket      | 0.0.3   | [pub.dev](https://pub.dev/packages/pusher_client_socket)               |
+  | pusher_client_socket      | 0.0.4   | [pub.dev](https://pub.dev/packages/pusher_client_socket)               |
   | fixed-laravel-echo-server | 0.1.4   | [npm](https://www.npmjs.com/package/@abdopr/fixed-laravel-echo-server) |
 
   To include these packages in your project, add the following dependencies to your `pubspec.yaml` file:
@@ -17,10 +17,10 @@
   ```yaml
   dependencies:
     socket_io_client: ^3.0.2
-    pusher_client_socket: ^0.0.3
+    pusher_client_socket: ^0.0.4
   ```
 
-  Please note that the `laravel_echo_null` package requires the `socket_io_client` package at version 2.0.2. Additionally, to ensure compatibility with the package, use the `fixed-laravel-echo-server` version 0.0.1, which is available on npm. You can install it globally by running the following command:
+  Please note that the `laravel_echo_null` package requires the `socket_io_client` package at version 3.0.2. Additionally, to ensure compatibility with the package, use the `fixed-laravel-echo-server` version 0.1.4, which is available on npm. You can install it globally by running the following command:
 
   ```bash
   npm i -g @abdopr/fixed-laravel-echo-server
@@ -173,12 +173,6 @@
     print(data);
   });
   ```
-
----
-
-## `Note: This Package is the improved version of the original package "laravel_echo", with some modifications and features`
-
----
 
 ## Powered By Abdo-Pr
 
