@@ -87,7 +87,7 @@ class SocketIoChannel extends Channel {
   }
 
   /// Unbind the channel's socket from all stored event callbacks.
-  void unbind() => events.keys.forEach((event) {
+  void unbind() => Map.from(events).keys.forEach((event) {
         _unbindEvent(event);
       });
 
