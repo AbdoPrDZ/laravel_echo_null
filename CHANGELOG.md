@@ -132,7 +132,11 @@
 - Upgrade flutter sdk.
 - Upgrade `pusher_client_socket` package version.
 
-## 0.1.0 - Frn 23, 2025
+## 0.1.0 - Feb 23, 2025
 
 - Upgrade flutter sdk.
 - Upgrade `pusher_client_socket` package version.
+
+## 0.1.1 - Feb 24, 2025
+
+- fix Concurrent modification error by [Andi1986](https://github.com/Andi1986)
