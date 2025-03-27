@@ -56,7 +56,7 @@ class SocketIoConnector extends Connector<Socket, SocketIoChannel> {
           options as SocketIoConnectorOptions,
         );
       } else if (name.startsWith('presence-')) {
-        channels[name] = SocketIoChannel(
+        channels[name] = SocketIoPresenceChannel(
           socket,
           name,
           options as SocketIoConnectorOptions,
