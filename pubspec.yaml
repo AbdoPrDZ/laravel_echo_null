@@ -4,7 +4,7 @@ version: 0.1.1
 homepage: https://github.com/AIabdoPr/laravel_echo_null.git
 
 environment:
-  sdk: ^3.7.0
+  sdk: ^3.7.2
   flutter: ">=1.17.0"
 
 dependencies:
@@ -12,8 +12,8 @@ dependencies:
     sdk: flutter
   meta: ^1.16.0
   pinenacl: ^0.6.0
-  pusher_client_socket: ^0.0.4
-  socket_io_client: ^3.0.2
+  pusher_client_socket: ^0.0.5
+  socket_io_client: ^3.1.0+2
 
 dev_dependencies:
   flutter_test:

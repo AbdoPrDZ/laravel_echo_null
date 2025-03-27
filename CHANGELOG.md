@@ -140,3 +140,8 @@
 ## 0.1.1 - Feb 24, 2025
 
 - fix Concurrent modification error by [Andi1986](https://github.com/Andi1986)
+
+## 0.1.0 - 2025-03-27
+
+- Upgrade flutter sdk.
+- fix SocketIoPresenceChannel type cast error by @stellapath [commit][https://github.com/stellapath/laravel_echo_null/commit/6d3bcf3d43d2ac3b559277145ead0be7381373ed].
