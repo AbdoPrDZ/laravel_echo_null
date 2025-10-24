@@ -41,7 +41,7 @@ class PusherConnector extends Connector<PUSHER.PusherClient, PusherChannel> {
                 key: key,
                 authOptions: PUSHER.PusherAuthOptions(
                   authEndPoint,
-                  headers: authHeaders,
+                  headers: () async => authHeaders,
                 ),
                 cluster: cluster,
                 channelDecryption: channelDecryption,
