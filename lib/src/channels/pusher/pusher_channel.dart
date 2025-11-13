@@ -23,11 +23,11 @@ class PusherChannel<PChannelT extends PUSHER.Channel> extends Channel {
 
   /// Subscribe to a Pusher channel.
   @override
-  void subscribe() => subscription = pusher.subscribe(name);
+  Future<void> subscribe() async => subscription = pusher.subscribe(name);
 
   /// Unsubscribe from a channel.
   @override
-  void unsubscribe() => pusher.unsubscribe(name);
+  Future<void> unsubscribe() async => pusher.unsubscribe(name);
 
   /// Listen for an event on the channel instance.
   @override

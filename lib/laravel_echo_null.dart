@@ -90,31 +90,28 @@ class Echo<ClientType, ChannelType> {
     String host, {
     String? namespace,
     bool autoConnect = true,
-    Map<String, String> authHeaders = const {
-      'Content-Type': 'application/json'
-    },
+    Future<Map<String, String>> Function()? authHeaders,
     Map moreOptions = const {},
     Map<String, dynamic> Function(String, Map)? channelDecryption,
-  }) =>
-      Echo<IO.Socket, SocketIoChannel>(SocketIoConnector(
-        host,
-        namespace: namespace,
-        autoConnect: autoConnect,
-        authHeaders: authHeaders,
-        moreOptions: moreOptions,
-        channelDecryption: channelDecryption,
-      ));
+  }) => Echo<IO.Socket, SocketIoChannel>(
+    SocketIoConnector(
+      host,
+      namespace: namespace,
+      autoConnect: autoConnect,
+      authHeaders: authHeaders,
+      moreOptions: moreOptions,
+      channelDecryption: channelDecryption,
+    ),
+  );
 
   /// Init Echo with Pusher client
   static Echo<PUSHER.PusherClient, PusherChannel> pusher(
     String appKey, {
     String? cluster,
     required String authEndPoint,
-    Map<String, String> authHeaders = const {
-      'Content-Type': 'application/json'
-    },
+    Future<Map<String, String>> Function()? authHeaders,
     Map<String, dynamic> Function(Uint8List, Map<String, dynamic>)?
-        channelDecryption,
+    channelDecryption,
     String? host,
     int wsPort = 80,
     int wssPort = 443,
@@ -126,24 +123,23 @@ class Echo<ClientType, ChannelType> {
     bool enableLogging = true,
     bool autoConnect = true,
     String? nameSpace,
-  }) =>
-      Echo<PUSHER.PusherClient, PusherChannel>(
-        PusherConnector(
-          appKey,
-          authEndPoint: authEndPoint,
-          authHeaders: authHeaders,
-          cluster: cluster,
-          host: host,
-          channelDecryption: channelDecryption,
-          wsPort: wsPort,
-          encrypted: encrypted,
-          activityTimeout: activityTimeout,
-          pongTimeout: pongTimeout,
-          maxReconnectionAttempts: maxReconnectionAttempts,
-          reconnectGap: reconnectGap,
-          enableLogging: enableLogging,
-          autoConnect: autoConnect,
-          nameSpace: nameSpace,
-        ),
-      );
+  }) => Echo<PUSHER.PusherClient, PusherChannel>(
+    PusherConnector(
+      appKey,
+      authEndPoint: authEndPoint,
+      authHeaders: authHeaders,
+      cluster: cluster,
+      host: host,
+      channelDecryption: channelDecryption,
+      wsPort: wsPort,
+      encrypted: encrypted,
+      activityTimeout: activityTimeout,
+      pongTimeout: pongTimeout,
+      maxReconnectionAttempts: maxReconnectionAttempts,
+      reconnectGap: reconnectGap,
+      enableLogging: enableLogging,
+      autoConnect: autoConnect,
+      nameSpace: nameSpace,
+    ),
+  );
 }

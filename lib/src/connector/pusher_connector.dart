@@ -18,12 +18,10 @@ class PusherConnector extends Connector<PUSHER.PusherClient, PusherChannel> {
     String key, {
     required String authEndPoint,
     String? cluster,
-    Map<String, String> authHeaders = const {
-      'Content-Type': 'application/json'
-    },
+    Future<Map<String, String>> Function()? authHeaders,
     String? host,
     Map<String, dynamic> Function(Uint8List, Map<String, dynamic>)?
-        channelDecryption,
+    channelDecryption,
     int wsPort = 80,
     int wssPort = 443,
     bool encrypted = true,
@@ -35,31 +33,31 @@ class PusherConnector extends Connector<PUSHER.PusherClient, PusherChannel> {
     bool autoConnect = true,
     String? nameSpace,
   }) : super(
-          ConnectorOptions(
-            client: PUSHER.PusherClient(
-              options: PUSHER.PusherOptions(
-                key: key,
-                authOptions: PUSHER.PusherAuthOptions(
-                  authEndPoint,
-                  headers: authHeaders,
-                ),
-                cluster: cluster,
-                channelDecryption: channelDecryption,
-                host: host,
-                wsPort: wsPort,
-                wssPort: wssPort,
-                encrypted: encrypted,
-                activityTimeout: activityTimeout,
-                pongTimeout: pongTimeout,
-                maxReconnectionAttempts: maxReconnectionAttempts,
-                reconnectGap: reconnectGap,
-                enableLogging: enableLogging,
-                autoConnect: autoConnect,
-              ),
-            ),
-            nameSpace: nameSpace,
-          ),
-        );
+         ConnectorOptions(
+           client: PUSHER.PusherClient(
+             options: PUSHER.PusherOptions(
+               key: key,
+               authOptions: PUSHER.PusherAuthOptions(
+                 authEndPoint,
+                 headers: authHeaders,
+               ),
+               cluster: cluster,
+               channelDecryption: channelDecryption,
+               host: host,
+               wsPort: wsPort,
+               wssPort: wssPort,
+               encrypted: encrypted,
+               activityTimeout: activityTimeout,
+               pongTimeout: pongTimeout,
+               maxReconnectionAttempts: maxReconnectionAttempts,
+               reconnectGap: reconnectGap,
+               enableLogging: enableLogging,
+               autoConnect: autoConnect,
+             ),
+           ),
+           nameSpace: nameSpace,
+         ),
+       );
 
   /// Listen for an event on a channel instance.
   @override
@@ -71,11 +69,7 @@ class PusherConnector extends Connector<PUSHER.PusherClient, PusherChannel> {
   PusherChannel channel(String name) {
     if (channels[name] == null) {
       if (name.startsWith('private-encrypted-')) {
-        channels[name] = PusherPrivateEncryptedChannel(
-          pusher,
-          name,
-          options,
-        );
+        channels[name] = PusherPrivateEncryptedChannel(pusher, name, options);
       } else if (name.startsWith('private-')) {
         channels[name] = PusherPrivateChannel(pusher, name, options);
       } else if (name.startsWith('presence-')) {

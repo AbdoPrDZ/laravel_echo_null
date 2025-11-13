@@ -15,11 +15,8 @@ class SocketIoChannel extends Channel {
   final String name;
 
   /// Create a new class instance.
-  SocketIoChannel(
-    this.socket,
-    this.name,
-    SocketIoConnectorOptions options,
-  ) : super(options) {
+  SocketIoChannel(this.socket, this.name, SocketIoConnectorOptions options)
+    : super(options) {
     subscribe();
   }
 
@@ -31,18 +28,18 @@ class SocketIoChannel extends Channel {
 
   /// Subscribe to a Socket.io channel.
   @override
-  void subscribe() => socket.emit('subscribe', {
-        'channel': name,
-        'auth': {'headers': options.authHeaders},
-      });
+  Future<void> subscribe() async => socket.emit('subscribe', {
+    'channel': name,
+    'auth': {'headers': await options.authHeaders?.call()},
+  });
 
   /// Unsubscribe from channel and unbind event callbacks.
   @override
-  void unsubscribe() {
+  Future<void> unsubscribe() async {
     unbind();
     socket.emit('unsubscribe', {
       'channel': name,
-      'auth': {'headers': options.authHeaders},
+      'auth': {'headers': await options.authHeaders?.call()},
     });
   }
 
@@ -88,16 +85,17 @@ class SocketIoChannel extends Channel {
 
   /// Unbind the channel's socket from all stored event callbacks.
   void unbind() => Map.from(events).keys.forEach((event) {
-        _unbindEvent(event);
-      });
+    _unbindEvent(event);
+  });
 
   /// Unbind the listeners for the given event.
   void _unbindEvent(String event, [Function? callback]) {
     listeners[event] = listeners[event] ?? [];
 
     if (callback != null) {
-      listeners[event] =
-          listeners[event]!.where((cb) => cb != callback).toList();
+      listeners[event] = listeners[event]!
+          .where((cb) => cb != callback)
+          .toList();
     }
 
     if (callback == null || listeners[event]!.isEmpty) {

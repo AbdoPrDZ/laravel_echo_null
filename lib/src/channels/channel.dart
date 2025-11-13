@@ -10,10 +10,10 @@ abstract class Channel {
   void listen(String event, Function callback);
 
   /// subscribe channel
-  void subscribe();
+  Future<void> subscribe();
 
   /// Unsubscribe channel
-  void unsubscribe();
+  Future<void> unsubscribe();
 
   /// Listen for a whisper event on the channel instance.
   void listenForWhisper(String event, Function callback) =>
@@ -21,9 +21,9 @@ abstract class Channel {
 
   /// Listen for an event on the channel instance.
   void notification(Function callback) => listen(
-        '.Illuminate\\Notifications\\Events\\BroadcastNotificationCreated',
-        callback,
-      );
+    '.Illuminate\\Notifications\\Events\\BroadcastNotificationCreated',
+    callback,
+  );
 
   /// Stop listening to an event on the channel instance.
   void stopListening(String event, [Function? callback]);

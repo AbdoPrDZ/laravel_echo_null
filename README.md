@@ -8,8 +8,8 @@
 
   | Package                   | Version | URL Source                                                             |
   | ------------------------- | ------- | ---------------------------------------------------------------------- |
-  | socket_io_client          | 3.1.0+2 | [pub.dev](https://pub.dev/packages/socket_io_client)                   |
-  | pusher_client_socket      | 0.0.5   | [pub.dev](https://pub.dev/packages/pusher_client_socket)               |
+  | socket_io_client          | 3.1.2   | [pub.dev](https://pub.dev/packages/socket_io_client)                   |
+  | pusher_client_socket      | 0.0.7   | [pub.dev](https://pub.dev/packages/pusher_client_socket)               |
   | fixed-laravel-echo-server | 0.1.4   | [npm](https://www.npmjs.com/package/@abdopr/fixed-laravel-echo-server) |
 
   To include these packages in your project, add the following dependencies to your `pubspec.yaml` file:
@@ -17,7 +17,7 @@
   ```yaml
   dependencies:
     socket_io_client: ^3.1.0+2
-    pusher_client_socket: ^0.0.5
+    pusher_client_socket: ^0.0.7
   ```
 
   Please note that the `laravel_echo_null` package requires the `socket_io_client` package at version 3.0.2. Additionally, to ensure compatibility with the package, use the `fixed-laravel-echo-server` version 0.1.4, which is available on npm. You can install it globally by running the following command:
@@ -48,7 +48,7 @@
     'http://localhost:6001', // String: host
     nameSpace: 'nameSpace', // String?: namespace
     autoConnect: false, // bool: client connection automatically
-    authHeaders: {
+    authHeaders: () async => {
       'Authorization': 'Bearer token'
     },
     moreOptions: {// Map: more io options
@@ -62,7 +62,7 @@
   Echo<PUSHER.PusherClient, PusherChannel> echo = Echo<PUSHER.PusherClient, PusherChannel>(PusherConnector(
     'PUSHER_APP_KEY',
     authEndPoint: 'http://localhost/broadcasting/auth', // String?: auth host
-    authHeaders: { // authenticate headers
+    authHeaders: () async => { // authenticate headers
       'Authorization': 'Bearer $token',
       'Content-Type': 'application/json',
       'Accept': 'application/json',
@@ -86,7 +86,7 @@
   Echo<PUSHER.PusherClient, PusherChannel> echo = Echo<PUSHER.PusherClient, PusherChannel>(PusherConnector(
     'PUSHER_APP_KEY',
     authEndPoint: 'http://localhost/broadcasting/auth', // String?: auth host
-    authHeaders: { // authenticate headers
+    authHeaders: () async => { // authenticate headers
       'Authorization': 'Bearer $token',
       'Content-Type': 'application/json',
       'Accept': 'application/json',
@@ -112,7 +112,7 @@
     'http://localhost:6001', // String: host
     nameSpace: 'nameSpace', // String?: namespace
     autoConnect: false, // bool: client connection automatically
-    authHeaders: {
+    authHeaders: () async => {
       'Authorization': 'Bearer token'
     },
     moreOptions: {// Map: more io options
@@ -126,7 +126,7 @@
   Echo<PUSHER.PusherClient, PusherChannel> echo = Echo.pusher(
     'PUSHER_APP_KEY',
     authEndPoint: 'http://localhost/broadcasting/auth', // String?: auth host
-    authHeaders: { // authenticate headers
+    authHeaders: () async => { // authenticate headers
       'Authorization': 'Bearer $token',
       'Content-Type': 'application/json',
       'Accept': 'application/json',

@@ -19,20 +19,23 @@ class SocketIoConnector extends Connector<Socket, SocketIoChannel> {
 
   SocketIoConnector(
     String host, {
-    Map<String, String>? authHeaders,
+    Future<Map<String, String>> Function()? authHeaders,
     String? namespace,
     bool autoConnect = true,
     Map moreOptions = const {},
     Map<String, dynamic> Function(String, Map)? channelDecryption,
-  }) : super(SocketIoConnectorOptions(
-            client: io(host, {
-              'autoConnect': autoConnect,
-              ...moreOptions,
-              'auth': {'headers': authHeaders},
-            }),
-            authHeaders: authHeaders,
-            nameSpace: namespace,
-            channelDecryption: channelDecryption));
+  }) : super(
+         SocketIoConnectorOptions(
+           client: io(host, {
+             'autoConnect': autoConnect,
+             ...moreOptions,
+             'auth': {'headers': authHeaders},
+           }),
+           authHeaders: authHeaders,
+           nameSpace: namespace,
+           channelDecryption: channelDecryption,
+         ),
+       );
 
   /// Listen for an event on a channel instance.
   @override
@@ -133,9 +136,7 @@ class SocketIoConnector extends Connector<Socket, SocketIoChannel> {
 
     // Reconnect to all channels
     onReconnect(
-      (_) => [
-        for (final channel in channels.values) channel.subscribe(),
-      ],
+      (_) => [for (final channel in channels.values) channel.subscribe()],
     );
   }
 

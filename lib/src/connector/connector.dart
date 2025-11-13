@@ -86,7 +86,7 @@ abstract class Connector<ClientType, ChannelType> {
 }
 
 class ConnectorOptions<T> {
-  final Map? authHeaders;
+  final Future<Map<String, String>> Function()? authHeaders;
   final String? nameSpace;
   final T client;
 
@@ -99,10 +99,8 @@ class ConnectorOptions<T> {
 
 class SocketIoConnectorOptions extends ConnectorOptions<IO.Socket> {
   /// The channel decryption handler.
-  final Map<String, dynamic> Function(
-    String sharedSecret,
-    Map data,
-  )? channelDecryption;
+  final Map<String, dynamic> Function(String sharedSecret, Map data)?
+  channelDecryption;
 
   const SocketIoConnectorOptions({
     required super.client,
@@ -115,14 +113,13 @@ class SocketIoConnectorOptions extends ConnectorOptions<IO.Socket> {
     Uint8List uint8list = base64Decode(cipherText);
     ByteData byteData = ByteData.sublistView(uint8list);
     List<int> data = List<int>.generate(
-        byteData.lengthInBytes, (index) => byteData.getUint8(index));
+      byteData.lengthInBytes,
+      (index) => byteData.getUint8(index),
+    );
     return ByteList(data);
   }
 
-  Map<String, dynamic> decryptChannelData(
-    String sharedSecret,
-    Map data,
-  ) =>
+  Map<String, dynamic> decryptChannelData(String sharedSecret, Map data) =>
       (channelDecryption ?? defaultChannelDecryptionHandler)(
         sharedSecret,
         data,
