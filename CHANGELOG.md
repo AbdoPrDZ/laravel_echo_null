@@ -1,3 +1,7 @@
+## 0.3.0 - Mar 04, 206
+
+- Upgrade flutter sdk version.
+
 ## 0.2.0 - Nov 14, 2025
 
 - Upgrade flutter sdk.
